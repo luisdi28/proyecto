@@ -174,7 +174,7 @@ class Pantalla_n2:
         pass
 
     def correr(self):
-        self.canvas=Canvas(width=600, height=600, bg="snow", highlightthickness=1, relief="ridge", highlightbackground="grey")
+        self.canvas=Canvas(width=600, height=600, bg="SkyBlue1", highlightthickness=1, relief="ridge", highlightbackground="grey")
         self.canvas.place(x=0,y=0)
 
         #Permite detectar cualquier boton que se asigne
@@ -233,7 +233,7 @@ class Pantalla_n3:
         pass
 
     def correr(self):
-        self.canvas=Canvas(width=600, height=600, bg="snow", highlightthickness=1, relief="ridge", highlightbackground="grey")
+        self.canvas=Canvas(width=600, height=600, bg="MediumPurple1", highlightthickness=1, relief="ridge", highlightbackground="grey")
         self.canvas.place(x=0,y=0)
 
         #Permite detectar cualquier boton que se asigne
