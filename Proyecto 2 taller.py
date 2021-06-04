@@ -147,7 +147,7 @@ class Pantalla_n1:
             if y-10>0:
                 self.canvas.coords(self.cuadradoimg,x,y-10)
         elif event.char=="d":
-            if x+10<500-70:
+            if x+10<575-70:
                 self.canvas.coords(self.cuadradoimg,x+10,y)
         elif event.char=="a":
             if x-10>0:
