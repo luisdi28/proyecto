@@ -101,7 +101,7 @@ class About:
         self.canvas.place(x=0,y=0)
 
         #Mensaje con la información 
-        self.info=Message(self.canvas,justify=(CENTER),bg="gray25",fg="white",text="Hecho en Costa Rica.\n\n Tecnologico de Costa Rica.\n\n Ingenieria en Computadores.\n\n Taller de Programación.\n\n Año 2021.\n\n Grupo 04.\n\n Profesor: Luis Barboza Artavia.\n\n Instrucciones:\n Debe ingresar su nombre para poder comenzar el juego. \n Puede elegir el nivel donde desea comenzar.\n El boton 'volver' lo retorna a la pantalla de inicio.",font=("Times New Roman",12))
+        self.info=Message(self.canvas,justify=(CENTER),bg="gray25",fg="white",text="Hecho en Costa Rica.\n\n Tecnologico de Costa Rica.\n\n Ingenieria en Computadores.\n\n Taller de Programación.\n\n Año 2021.\n\n Grupo 04.\n\n Profesor: Luis Barboza Artavia.\n\n Estudiantes: Luis Diego Araya y Carlos Contreras. \n\n Autores: Luis Diego Araya y Carlos Contreras. \n\n Instrucciones:\n Debe ingresar su nombre para poder comenzar el juego. \n Puede elegir el nivel donde desea comenzar.\n El boton 'volver' lo retorna a la pantalla de inicio.",font=("Times New Roman",12))
         self.info.place(x=50,y=-23,width=500,height=500)
 
         #Boton para volver a la pantalla de inicio 
@@ -147,7 +147,7 @@ class Pantalla_n1:
             if y-10>0:
                 self.canvas.coords(self.cuadradoimg,x,y-10)
         elif event.char=="d":
-            if x+10<660-70:
+            if x+10<630-70:
                 self.canvas.coords(self.cuadradoimg,x+10,y)
         elif event.char=="a":
             if x-10>0:
@@ -174,7 +174,7 @@ class Pantalla_n2:
         pass
 
     def correr(self):
-        self.canvas=Canvas(width=600, height=600, bg="SkyBlue1", highlightthickness=1, relief="ridge", highlightbackground="grey")
+        self.canvas=Canvas(width=600, height=600, bg="snow", highlightthickness=1, relief="ridge", highlightbackground="grey")
         self.canvas.place(x=0,y=0)
 
         #Permite detectar cualquier boton que se asigne
@@ -206,7 +206,7 @@ class Pantalla_n2:
             if y-10>0:
                 self.canvas.coords(self.cuadradoimg,x,y-10)
         elif event.char=="d":
-            if x+10<660-70:
+            if x+10<630-70:
                 self.canvas.coords(self.cuadradoimg,x+10,y)
         elif event.char=="a":
             if x-10>0:
@@ -233,7 +233,7 @@ class Pantalla_n3:
         pass
 
     def correr(self):
-        self.canvas=Canvas(width=600, height=600, bg="MediumPurple1", highlightthickness=1, relief="ridge", highlightbackground="grey")
+        self.canvas=Canvas(width=600, height=600, bg="snow", highlightthickness=1, relief="ridge", highlightbackground="grey")
         self.canvas.place(x=0,y=0)
 
         #Permite detectar cualquier boton que se asigne
@@ -265,7 +265,7 @@ class Pantalla_n3:
             if y-10>0:
                 self.canvas.coords(self.cuadradoimg,x,y-10)
         elif event.char=="d":
-            if x+10<660-70:
+            if x+10<630-70:
                 self.canvas.coords(self.cuadradoimg,x+10,y)
         elif event.char=="a":
             if x-10>0:
