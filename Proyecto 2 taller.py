@@ -5,6 +5,14 @@ from threading import Thread
 import os
 from PIL import ImageTk,Image
 
+#Globales
+global vidanave
+vidanave=3
+global puntaje
+puntaje=0
+global progreso
+progreso=0
+
 #Color de las figuras
 chicle = "#FFBED2"
 menta = "#B5EAD7"
@@ -25,8 +33,8 @@ def cargar_imagen(nombre):
 class Ventana_inicio:
     def __init__(self,master):
         self.master=master
-		#Función para volver a la ventana inicial
-        
+
+#Función para volver a la ventana inicial
     def regresar_ventana(self):
         ventana_principal.correr()
         
@@ -34,6 +42,9 @@ class Ventana_inicio:
     def correr(self):
         self.About=About()
         self.Pantalla_n1=Pantalla_n1()
+        self.Pantalla_n2=Pantalla_n2()
+        self.Pantalla_n3=Pantalla_n3()
+        
         #Se define el canvas         
         self.canvas = Canvas(self.master,width=600,height=600,highlightthickness=0,relief='ridge',bg="black")
         self.canvas.place(x=0,y=0)
@@ -64,7 +75,7 @@ class Ventana_inicio:
         self.botone.place(x=265,y=425,width=100,height=30)
         #Se define el boton para ir a la ventana "About"
         self.botona= Button(self.canvas,text="Pantalla About", command=self.ir_info)
-        self.botona.place(x=265,y=450,width=100,height=30)
+        self.botona.place(x=265,y=475,width=100,height=30)
 
 #Funcion que permite al boton de para ir a la pantalla about funcionar.
     def ir_info(self):
@@ -73,6 +84,10 @@ class Ventana_inicio:
     def ir_juego(self):
         if self.entrada.get()!="" and var.get()==1:
             self.Pantalla_n1.correr()
+        elif self.entrada.get()!="" and var.get()==2:
+            self.Pantalla_n2.correr()
+        elif self.entrada.get()!="" and var.get()==3:
+            self.Pantalla_n3.correr()
   
 #Pantalla about 
 class About:
@@ -114,7 +129,15 @@ class Pantalla_n1:
         self.button_return=Button(self.canvas,text="Regresar",font=("Times New Roman",10),bg="snow",fg="black",command=ventana_principal.correr)
         self.button_return.place(x=15,y=565,width=100,height=30)
 
-        #Se define el movimiento de la figura
+        #Label que muestra el tiempo, la puntuacion y la vida
+        self.tiempo= Label(self.canvas, text= "", width=5, font=("Times New Roman",9), fg="snow", bg="grey")
+        self.tiempo.place(x=22,y=5,width=65, height=20)
+        self.puntuacion= Label(self.canvas,text= "Puntaje: " + str(puntaje), font=("Times New Roman",9), fg="snow", bg="grey")
+        self.puntuacion.place(x=425,y=575,width=65, height=20)
+        self.vida=Label(self.canvas,text= "Vidas: " + str(vidanave), font=("Times New Roman",9), fg="snow", bg="grey")
+        self.vida.place(x=525,y=575,width=65, height=20)
+
+#Se define el movimiento de la figura
     def mover_cuadrado(self,event):
         x,y=self.canvas.coords(self.cuadradoimg)
         if event.char=="s":
@@ -129,9 +152,140 @@ class Pantalla_n1:
         elif event.char=="a":
             if x-10>0:
                 self.canvas.coords(self.cuadradoimg,x-10,y)
+                
+#Funcion que hace que el jugador pierda vidas.
+    #def colision(self,shiping,nave,enemigos):
+        #global vidanave
+        #enemigoscoords=self.canvas.bbox(self.enemigos)
+        #navecoords=self.canvas.bbox
+        #if navecoords[0]<enemigoscoords[2] and nave[2]>enemigoscoords[0] and navecoords[1]<enemigoscoords[3] and enemigoscoords[3]>navecoords[1]:
+            #global vidanave
+            #vidanave-=1
+            #self.vida.config(text="Vidas: " + str(vidanave))
+            #return True
+        #else:
+            #return False
+
+
+#Clase pantalla del nivel 1  
+class Pantalla_n2:
+    def __init__(self):
+
+        pass
+
+    def correr(self):
+        self.canvas=Canvas(width=600, height=600, bg="snow", highlightthickness=1, relief="ridge", highlightbackground="grey")
+        self.canvas.place(x=0,y=0)
+
+        #Permite detectar cualquier boton que se asigne
+        window.bind_all("<KeyRelease>",self.mover_cuadrado)
         
+        #Se carga la imagen de la figura que usara el jugador
+        self.cuadrado=cargar_imagen('cuadrado.png')
+        self.cuadradoimg = self.canvas.create_image(300,540,image=self.cuadrado,ancho=NW)
         
-      
+        #Boton para retornar a la pantalla inicial
+        self.button_return=Button(self.canvas,text="Regresar",font=("Times New Roman",10),bg="snow",fg="black",command=ventana_principal.correr)
+        self.button_return.place(x=15,y=565,width=100,height=30)
+
+        #Label que muestra el tiempo, la puntuacion y la vida
+        self.tiempo= Label(self.canvas, text= "", width=5, font=("Times New Roman",9), fg="snow", bg="grey")
+        self.tiempo.place(x=22,y=5,width=65, height=20)
+        self.puntuacion= Label(self.canvas,text= "Puntaje: " + str(puntaje), font=("Times New Roman",9), fg="snow", bg="grey")
+        self.puntuacion.place(x=425,y=575,width=65, height=20)
+        self.vida=Label(self.canvas,text= "Vidas: " + str(vidanave), font=("Times New Roman",9), fg="snow", bg="grey")
+        self.vida.place(x=525,y=575,width=65, height=20)
+
+#Se define el movimiento de la figura
+    def mover_cuadrado(self,event):
+        x,y=self.canvas.coords(self.cuadradoimg)
+        if event.char=="s":
+            if y+10<500-80:
+                self.canvas.coords(self.cuadradoimg,x,y+10)
+        elif event.char=="w":
+            if y-10>0:
+                self.canvas.coords(self.cuadradoimg,x,y-10)
+        elif event.char=="d":
+            if x+10<500-70:
+                self.canvas.coords(self.cuadradoimg,x+10,y)
+        elif event.char=="a":
+            if x-10>0:
+                self.canvas.coords(self.cuadradoimg,x-10,y)
+                
+#Funcion que hace que el jugador pierda vidas.
+    #def colision(self,shiping,nave,enemigos):
+        #global vidanave
+        #enemigoscoords=self.canvas.bbox(self.enemigos)
+        #navecoords=self.canvas.bbox
+        #if navecoords[0]<enemigoscoords[2] and nave[2]>enemigoscoords[0] and navecoords[1]<enemigoscoords[3] and enemigoscoords[3]>navecoords[1]:
+            #global vidanave
+            #vidanave-=1
+            #self.vida.config(text="Vidas: " + str(vidanave))
+            #return True
+        #else:
+            #return False
+
+
+#Clase pantalla del nivel 1  
+class Pantalla_n3:
+    def __init__(self):
+
+        pass
+
+    def correr(self):
+        self.canvas=Canvas(width=600, height=600, bg="snow", highlightthickness=1, relief="ridge", highlightbackground="grey")
+        self.canvas.place(x=0,y=0)
+
+        #Permite detectar cualquier boton que se asigne
+        window.bind_all("<KeyRelease>",self.mover_cuadrado)
+        
+        #Se carga la imagen de la figura que usara el jugador
+        self.cuadrado=cargar_imagen('cuadrado.png')
+        self.cuadradoimg = self.canvas.create_image(300,540,image=self.cuadrado,ancho=NW)
+        
+        #Boton para retornar a la pantalla inicial
+        self.button_return=Button(self.canvas,text="Regresar",font=("Times New Roman",10),bg="snow",fg="black",command=ventana_principal.correr)
+        self.button_return.place(x=15,y=565,width=100,height=30)
+
+        #Label que muestra el tiempo, la puntuacion y la vida
+        self.tiempo= Label(self.canvas, text= "", width=5, font=("Times New Roman",9), fg="snow", bg="grey")
+        self.tiempo.place(x=22,y=5,width=65, height=20)
+        self.puntuacion= Label(self.canvas,text= "Puntaje: " + str(puntaje), font=("Times New Roman",9), fg="snow", bg="grey")
+        self.puntuacion.place(x=425,y=575,width=65, height=20)
+        self.vida=Label(self.canvas,text= "Vidas: " + str(vidanave), font=("Times New Roman",9), fg="snow", bg="grey")
+        self.vida.place(x=525,y=575,width=65, height=20)
+
+#Se define el movimiento de la figura
+    def mover_cuadrado(self,event):
+        x,y=self.canvas.coords(self.cuadradoimg)
+        if event.char=="s":
+            if y+10<500-80:
+                self.canvas.coords(self.cuadradoimg,x,y+10)
+        elif event.char=="w":
+            if y-10>0:
+                self.canvas.coords(self.cuadradoimg,x,y-10)
+        elif event.char=="d":
+            if x+10<500-70:
+                self.canvas.coords(self.cuadradoimg,x+10,y)
+        elif event.char=="a":
+            if x-10>0:
+                self.canvas.coords(self.cuadradoimg,x-10,y)
+
+#Funcion que hace que el jugador pierda vidas.
+    #def colision(self,shiping,nave,enemigos):
+        #global vidanave
+        #enemigoscoords=self.canvas.bbox(self.enemigos)
+        #navecoords=self.canvas.bbox
+        #if navecoords[0]<enemigoscoords[2] and nave[2]>enemigoscoords[0] and navecoords[1]<enemigoscoords[3] and enemigoscoords[3]>navecoords[1]:
+            #global vidanave
+            #vidanave-=1
+            #self.vida.config(text="Vidas: " + str(vidanave))
+            #return True
+        #else:
+            #return False
+    
+
+
 
     
 
