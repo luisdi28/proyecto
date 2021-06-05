@@ -121,7 +121,8 @@ class Pantalla_n1:
         pass
 
     def correr(self):
-        self.canvas=Canvas(width=600, height=600, bg="snow", highlightthickness=1, relief="ridge", highlightbackground="grey")
+        WIDTH, HEIGHT = 600, 600
+        self.canvas=Canvas(width=WIDTH, height=HEIGHT, bg="snow", highlightthickness=1, relief="ridge", highlightbackground="grey")
         self.canvas.place(x=0,y=0)
 
         #Permite detectar cualquier boton que se asigne
@@ -130,6 +131,9 @@ class Pantalla_n1:
         #Se carga la imagen de la figura que usara el jugador
         self.cuadrado=cargar_imagen('cuadrado.png')
         self.cuadradoimg = self.canvas.create_image(300,540,image=self.cuadrado,ancho=NW)
+
+        self.triangulo=cargar_imagen('triangulo.png')
+        self.trianguloimg = self.canvas.create_image(randint(0,300),randint(0,300),image=self.triangulo,ancho=NW)
         
         #Boton para retornar a la pantalla inicial
         self.button_return=Button(self.canvas,text="Regresar",font=("Times New Roman",10),bg="snow",fg="black",command=ventana_principal.correr)
@@ -153,6 +157,11 @@ class Pantalla_n1:
         self.reloj=Thread(target=self.tiempo,args=[])
         self.reloj.start()
 
+        #Thread de la animacion
+        animacion = Thread(target = self.Animacion, args = (self.trianguloimg,self.canvas))
+        animacion.start()
+        window.mainloop()
+
 #Funcion del cronometro
     def tiempo(self):
         global seg
@@ -167,6 +176,27 @@ class Pantalla_n1:
             self.segundo.configure(text=seg)
             time.sleep(1)
             return self.tiempo()
+
+    def Animacion(self,triangulo,canvas):
+        x = 5
+        y = 5
+
+        while True:
+            temp = randint(0,10)
+
+            coords = self.canvas.coords(triangulo)
+            if coords[0] <= 0:
+                x = temp
+            elif coords[0] >= 430:
+                x = -temp
+            elif coords[1] <= 0:
+                y = temp
+            elif coords[1] >= 430:
+                y = -temp
+
+            time.sleep(0.0001)
+
+            self.canvas.move(triangulo,x,y)
 
 #Funcion para pasar de nivel.
     #def pasar(self):
