@@ -12,6 +12,12 @@ global puntaje
 puntaje=0
 global progreso
 progreso=0
+global mi
+mi = 0
+global seg
+seg=0
+global cerrarthread
+cerrarthread=False
 
 #Color de las figuras
 chicle = "#FFBED2"
@@ -129,13 +135,38 @@ class Pantalla_n1:
         self.button_return=Button(self.canvas,text="Regresar",font=("Times New Roman",10),bg="snow",fg="black",command=ventana_principal.correr)
         self.button_return.place(x=15,y=565,width=100,height=30)
 
-        #Label que muestra el tiempo, la puntuacion y la vida
-        self.tiempo= Label(self.canvas, text= "", width=5, font=("Times New Roman",9), fg="snow", bg="grey")
-        self.tiempo.place(x=22,y=5,width=65, height=20)
+        #Label que muestra la puntuacion y la vida
         self.puntuacion= Label(self.canvas,text= "Puntaje: " + str(puntaje), font=("Times New Roman",9), fg="snow", bg="grey")
         self.puntuacion.place(x=425,y=575,width=65, height=20)
         self.vida=Label(self.canvas,text= "Vidas: " + str(vidanave), font=("Times New Roman",9), fg="snow", bg="grey")
         self.vida.place(x=525,y=575,width=65, height=20)
+
+        #Cronometro
+        self.minuto=Label(self.canvas,text="",font=("Times New Roman",12),fg="black",bg="snow",width=1,height=1)
+        self.minuto.place(x=5,y=3)
+        self.segundo=Label(self.canvas,text="",font=("Times New Roman",12),fg="black",bg="snow",width=1,height=1)
+        self.segundo.place(x=35,y=3)
+        self.dos_puntos=Label(self.canvas,text=":",font=("Times New Roman",12),fg="black",bg="snow",width=1,height=1)
+        self.dos_puntos.place(x=65,y=3)
+
+        #Thread del cronometro (lo inicia)
+        self.reloj=Thread(target=self.tiempo,args=[])
+        self.reloj.start()
+
+#Funcion del cronometro
+    def tiempo(self):
+        global seg
+        global mi
+        global cerrarthread
+        if not cerrarthread:
+            seg+=1
+            if seg==60:
+                seg=0
+                mi+=1
+                self.minuto.configure(text=mi)
+            self.segundo.configure(text=seg)
+            time.sleep(1)
+            return self.tiempo()
 
 #Se define el movimiento de la figura
     def mover_cuadrado(self,event):
@@ -147,7 +178,7 @@ class Pantalla_n1:
             if y-10>0:
                 self.canvas.coords(self.cuadradoimg,x,y-10)
         elif event.char=="d":
-            if x+10<630-70:
+            if x+10<500-70:
                 self.canvas.coords(self.cuadradoimg,x+10,y)
         elif event.char=="a":
             if x-10>0:
@@ -165,7 +196,6 @@ class Pantalla_n1:
             #return True
         #else:
             #return False
-
 
 #Clase pantalla del nivel 1  
 class Pantalla_n2:
@@ -188,13 +218,38 @@ class Pantalla_n2:
         self.button_return=Button(self.canvas,text="Regresar",font=("Times New Roman",10),bg="snow",fg="black",command=ventana_principal.correr)
         self.button_return.place(x=15,y=565,width=100,height=30)
 
-        #Label que muestra el tiempo, la puntuacion y la vida
-        self.tiempo= Label(self.canvas, text= "", width=5, font=("Times New Roman",9), fg="snow", bg="grey")
-        self.tiempo.place(x=22,y=5,width=65, height=20)
+        #Label que muestra la puntuacion y la vida
         self.puntuacion= Label(self.canvas,text= "Puntaje: " + str(puntaje), font=("Times New Roman",9), fg="snow", bg="grey")
         self.puntuacion.place(x=425,y=575,width=65, height=20)
         self.vida=Label(self.canvas,text= "Vidas: " + str(vidanave), font=("Times New Roman",9), fg="snow", bg="grey")
         self.vida.place(x=525,y=575,width=65, height=20)
+
+        #Cronometro
+        self.minuto=Label(self.canvas,text="",font=("Times New Roman",12),fg="black",bg="snow",width=1,height=1)
+        self.minuto.place(x=5,y=3)
+        self.segundo=Label(self.canvas,text="",font=("Times New Roman",12),fg="black",bg="snow",width=1,height=1)
+        self.segundo.place(x=35,y=3)
+        self.dos_puntos=Label(self.canvas,text=":",font=("Times New Roman",12),fg="black",bg="snow",width=1,height=1)
+        self.dos_puntos.place(x=65,y=3)
+
+        #Thread del cronometro (lo inicia)
+        self.reloj=Thread(target=self.tiempo,args=[])
+        self.reloj.start()
+
+#Funcion del cronometro
+    def tiempo(self):
+        global seg
+        global mi
+        global cerrarthread
+        if not cerrarthread:
+            seg+=1
+            if seg==60:
+                seg=0
+                mi+=1
+                self.minuto.configure(text=mi)
+            self.segundo.configure(text=seg)
+            time.sleep(1)
+            return self.tiempo()
 
 #Se define el movimiento de la figura
     def mover_cuadrado(self,event):
@@ -206,7 +261,7 @@ class Pantalla_n2:
             if y-10>0:
                 self.canvas.coords(self.cuadradoimg,x,y-10)
         elif event.char=="d":
-            if x+10<630-70:
+            if x+10<500-70:
                 self.canvas.coords(self.cuadradoimg,x+10,y)
         elif event.char=="a":
             if x-10>0:
@@ -247,13 +302,38 @@ class Pantalla_n3:
         self.button_return=Button(self.canvas,text="Regresar",font=("Times New Roman",10),bg="snow",fg="black",command=ventana_principal.correr)
         self.button_return.place(x=15,y=565,width=100,height=30)
 
-        #Label que muestra el tiempo, la puntuacion y la vida
-        self.tiempo= Label(self.canvas, text= "", width=5, font=("Times New Roman",9), fg="snow", bg="grey")
-        self.tiempo.place(x=22,y=5,width=65, height=20)
+        #Label que muestra la puntuacion y la vida
         self.puntuacion= Label(self.canvas,text= "Puntaje: " + str(puntaje), font=("Times New Roman",9), fg="snow", bg="grey")
         self.puntuacion.place(x=425,y=575,width=65, height=20)
         self.vida=Label(self.canvas,text= "Vidas: " + str(vidanave), font=("Times New Roman",9), fg="snow", bg="grey")
         self.vida.place(x=525,y=575,width=65, height=20)
+
+        #Cronometro
+        self.minuto=Label(self.canvas,text="",font=("Times New Roman",12),fg="black",bg="snow",width=1,height=1)
+        self.minuto.place(x=5,y=3)
+        self.segundo=Label(self.canvas,text="",font=("Times New Roman",12),fg="black",bg="snow",width=1,height=1)
+        self.segundo.place(x=35,y=3)
+        self.dos_puntos=Label(self.canvas,text=":",font=("Times New Roman",12),fg="black",bg="snow",width=1,height=1)
+        self.dos_puntos.place(x=65,y=3)
+
+        #Thread del cronometro (lo inicia)
+        self.reloj=Thread(target=self.tiempo,args=[])
+        self.reloj.start()
+
+#Funcion del cronometro
+    def tiempo(self):
+        global seg
+        global mi
+        global cerrarthread
+        if not cerrarthread:
+            seg+=1
+            if seg==60:
+                seg=0
+                mi+=1
+                self.minuto.configure(text=mi)
+            self.segundo.configure(text=seg)
+            time.sleep(1)
+            return self.tiempo()
 
 #Se define el movimiento de la figura
     def mover_cuadrado(self,event):
@@ -265,7 +345,7 @@ class Pantalla_n3:
             if y-10>0:
                 self.canvas.coords(self.cuadradoimg,x,y-10)
         elif event.char=="d":
-            if x+10<630-70:
+            if x+10<500-70:
                 self.canvas.coords(self.cuadradoimg,x+10,y)
         elif event.char=="a":
             if x-10>0:
