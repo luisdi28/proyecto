@@ -128,7 +128,7 @@ class Pantalla_n1:
         #Permite detectar cualquier boton que se asigne
         window.bind_all("<KeyRelease>",self.mover_cuadrado)
         
-        #Se carga la imagen de la figura que usara el jugador
+        #Se carga la imagen de la figura que usara el jugador y el enemigo
         self.cuadrado=cargar_imagen('cuadrado.png')
         self.cuadradoimg = self.canvas.create_image(300,540,image=self.cuadrado,ancho=NW)
 
@@ -160,8 +160,7 @@ class Pantalla_n1:
         #Thread de la animacion
         animacion = Thread(target = self.Animacion, args = (self.trianguloimg,self.canvas))
         animacion.start()
-        window.mainloop()
-
+        
 #Funcion del cronometro
     def tiempo(self):
         global seg
@@ -185,6 +184,7 @@ class Pantalla_n1:
             temp = randint(0,10)
 
             coords = self.canvas.coords(triangulo)
+            
             if coords[0] <= 0:
                 x = temp
             elif coords[0] >= 430:
@@ -194,9 +194,10 @@ class Pantalla_n1:
             elif coords[1] >= 430:
                 y = -temp
 
-            time.sleep(0.0001)
+            time.sleep(0.1)
 
             self.canvas.move(triangulo,x,y)
+            
 
 #Funcion para pasar de nivel.
     #def pasar(self):
@@ -263,10 +264,14 @@ class Pantalla_n2:
         #Permite detectar cualquier boton que se asigne
         window.bind_all("<KeyRelease>",self.mover_cuadrado)
         
-        #Se carga la imagen de la figura que usara el jugador
+        #Se carga la imagen de la figura que usara el jugador y el emnemigo
         self.cuadrado=cargar_imagen('cuadrado.png')
         self.cuadradoimg = self.canvas.create_image(300,540,image=self.cuadrado,ancho=NW)
-        
+
+
+        self.triangulo=cargar_imagen('triangulo.png')
+        self.trianguloimg = self.canvas.create_image(randint(0,300),randint(0,300),image=self.triangulo,ancho=NW)
+
         #Boton para retornar a la pantalla inicial
         self.button_return=Button(self.canvas,text="Regresar",font=("Times New Roman",10),bg="snow",fg="black",command=ventana_principal.correr)
         self.button_return.place(x=15,y=565,width=100,height=30)
@@ -289,6 +294,10 @@ class Pantalla_n2:
         self.reloj=Thread(target=self.tiempo,args=[])
         self.reloj.start()
 
+        #Thread de la animacion
+        animacion = Thread(target = self.Animacion, args = (self.trianguloimg,self.canvas))
+        animacion.start()
+
 #Funcion del cronometro
     def tiempo(self):
         global seg
@@ -303,6 +312,29 @@ class Pantalla_n2:
             self.segundo.configure(text=seg)
             time.sleep(1)
             return self.tiempo()
+        
+#Fuvion que mueve al enemigo
+    def Animacion(self,triangulo,canvas):
+        x = 5
+        y = 5
+
+        while True:
+            temp = randint(0,10)
+
+            coords = self.canvas.coords(triangulo)
+            
+            if coords[0] <= 0:
+                x = temp
+            elif coords[0] >= 430:
+                x = -temp
+            elif coords[1] <= 0:
+                y = temp
+            elif coords[1] >= 430:
+                y = -temp
+
+            time.sleep(0.1)
+
+            self.canvas.move(triangulo,x,y)
 
 #Se define el movimiento de la figura
     def mover_cuadrado(self,event):
@@ -366,10 +398,13 @@ class Pantalla_n3:
         #Permite detectar cualquier boton que se asigne
         window.bind_all("<KeyRelease>",self.mover_cuadrado)
         
-        #Se carga la imagen de la figura que usara el jugador
+        #Se carga la imagen de la figura que usara el jugador y el enemigo
         self.cuadrado=cargar_imagen('cuadrado.png')
         self.cuadradoimg = self.canvas.create_image(300,540,image=self.cuadrado,ancho=NW)
-        
+
+        self.triangulo=cargar_imagen('triangulo.png')
+        self.trianguloimg = self.canvas.create_image(randint(0,300),randint(0,300),image=self.triangulo,ancho=NW)
+
         #Boton para retornar a la pantalla inicial
         self.button_return=Button(self.canvas,text="Regresar",font=("Times New Roman",10),bg="snow",fg="black",command=ventana_principal.correr)
         self.button_return.place(x=15,y=565,width=100,height=30)
@@ -392,6 +427,10 @@ class Pantalla_n3:
         self.reloj=Thread(target=self.tiempo,args=[])
         self.reloj.start()
 
+        #Thread de la animacion
+        animacion = Thread(target = self.Animacion, args = (self.trianguloimg,self.canvas))
+        animacion.start()
+
 #Funcion del cronometro
     def tiempo(self):
         global seg
@@ -406,6 +445,31 @@ class Pantalla_n3:
             self.segundo.configure(text=seg)
             time.sleep(1)
             return self.tiempo()
+
+#Fuvion que mueve al enemigo
+    def Animacion(self,triangulo,canvas):
+        x = 5
+        y = 5
+
+        while True:
+            temp = randint(0,10)
+
+            coords = self.canvas.coords(triangulo)
+            
+            if coords[0] <= 0:
+                x = temp
+            elif coords[0] >= 430:
+                x = -temp
+            elif coords[1] <= 0:
+                y = temp
+            elif coords[1] >= 430:
+                y = -temp
+
+            time.sleep(0.1)
+
+            self.canvas.move(triangulo,x,y)
+
+
 
 #Se define el movimiento de la figura
     def mover_cuadrado(self,event):
