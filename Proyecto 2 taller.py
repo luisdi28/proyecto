@@ -19,17 +19,6 @@ seg=0
 global cerrarthread
 cerrarthread=False
 
-#Color de las figuras
-chicle = "#FFBED2"
-menta = "#B5EAD7"
-azul = "#82B3FF"
-amarrillo = "#FFFFD8"
-salmon = "#FF9AA2"
-purpura = "#B399D4"
-rosado = "#E18AAA"
-
-colors = [chicle, menta, azul, amarrillo, salmon, purpura, rosado]
-
 def cargar_imagen(nombre):
     ruta=os.path.join('photos',nombre)
     imagen=PhotoImage(file=ruta)
@@ -166,7 +155,7 @@ class Pantalla_n1:
         self.reloj.start()
 
         #Thread de la animacion
-        animacion = Thread(target = self.Animacion, args = (self.estrellaimg,self.circuloimg,self.trianguloimg,self.canvas))
+        animacion = Thread(target = self.Animacion, args = (self.trianguloimg,self.circuloimg,self.estrellaimg,self.canvas))
         animacion.start()
         
 #Funcion del cronometro
@@ -184,7 +173,7 @@ class Pantalla_n1:
             time.sleep(1)
             return self.tiempo()
 
-#Funcion que mueve al enemigo
+#Fuvion que mueve al enemigo
     def Animacion(self,estrella,circulo,triangulo,canvas):
         x=5
         y=5
@@ -233,7 +222,6 @@ class Pantalla_n1:
             self.canvas.move(circulo,w,z)
             self.canvas.move(estrella,o,p)
             
-
 #Funcion para pasar de nivel.
     #def pasar(self):
         #global mi
@@ -254,9 +242,6 @@ class Pantalla_n1:
     #def avanzar(self):
         #ventana_principal.correr()
         
-        
-        
-
 #Se define el movimiento de la figura
     def mover_cuadrado(self,event):
         x,y=self.canvas.coords(self.cuadradoimg)
@@ -267,24 +252,23 @@ class Pantalla_n1:
             if y-10>0:
                 self.canvas.coords(self.cuadradoimg,x,y-10)
         elif event.char=="d":
-            if x+10<500-70:
+            if x+10<630-70:
                 self.canvas.coords(self.cuadradoimg,x+10,y)
         elif event.char=="a":
             if x-10>0:
                 self.canvas.coords(self.cuadradoimg,x-10,y)
                 
 #Funcion que hace que el jugador pierda vidas.
-    #def colision(self,shiping,nave,enemigos):
-        #global vidanave
-        #enemigoscoords=self.canvas.bbox(self.enemigos)
-        #navecoords=self.canvas.bbox
-        #if navecoords[0]<enemigoscoords[2] and nave[2]>enemigoscoords[0] and navecoords[1]<enemigoscoords[3] and enemigoscoords[3]>navecoords[1]:
-            #global vidanave
-            #vidanave-=1
-            #self.vida.config(text="Vidas: " + str(vidanave))
-            #return True
-        #else:
-            #return False
+    def colision(self):
+        global vidanave
+        triangulocoords=self.canvas.bbox(self.trianguloimg)
+        cuadradocoords=self.canvas.bbox(self.cuadradoimg)
+        if cuadradocoords[0]<triangulocoords[2] and cuadradocoords[2]>triangulocoords[0] and cuadradocoords[1]<triangulocoords[3] and triangulocoords[3]>cuadradocoords[1]:
+            vidanave-=1
+            self.vida.config(text="Vidas: " + str(vidanave))
+            return True
+        else:
+            return False
 
 #Clase pantalla del nivel 1  
 class Pantalla_n2:
@@ -303,9 +287,23 @@ class Pantalla_n2:
         self.cuadrado=cargar_imagen('cuadrado.png')
         self.cuadradoimg = self.canvas.create_image(300,540,image=self.cuadrado,ancho=NW)
 
+        self.cuadrado=cargar_imagen('cuadrado.png')
+        self.cuadradoimg = self.canvas.create_image(300,540,image=self.cuadrado,ancho=NW)
 
         self.triangulo=cargar_imagen('triangulo.png')
         self.trianguloimg = self.canvas.create_image(randint(0,300),randint(0,300),image=self.triangulo,ancho=NW)
+
+        self.circulo=cargar_imagen('circulo.png')
+        self.circuloimg = self.canvas.create_image(randint(0,400),randint(0,400),image=self.circulo,ancho=NW)
+
+        self.estrella=cargar_imagen('estrella.png')
+        self.estrellaimg = self.canvas.create_image(randint(0,400),randint(0,400),image=self.estrella,ancho=NW)
+
+        self.rombo=cargar_imagen('rombo.png')
+        self.romboimg = self.canvas.create_image(randint(0,400),randint(0,400),image=self.rombo,ancho=NW)
+
+        self.cilindro=cargar_imagen('cilindro.png')
+        self.cilindroimg = self.canvas.create_image(randint(0,400),randint(0,400),image=self.cilindro,ancho=NW)
 
         #Boton para retornar a la pantalla inicial
         self.button_return=Button(self.canvas,text="Regresar",font=("Times New Roman",10),bg="snow",fg="black",command=ventana_principal.correr)
@@ -330,7 +328,7 @@ class Pantalla_n2:
         self.reloj.start()
 
         #Thread de la animacion
-        animacion = Thread(target = self.Animacion, args = (self.trianguloimg,self.canvas))
+        animacion = Thread(target = self.Animacion, args = (self.trianguloimg,self.circuloimg,self.estrellaimg,self.romboimg,self.cilindroimg,self.canvas))
         animacion.start()
 
 #Funcion del cronometro
@@ -348,28 +346,80 @@ class Pantalla_n2:
             time.sleep(1)
             return self.tiempo()
         
-#Fuvion que mueve al enemigo
-    def Animacion(self,triangulo,canvas):
-        x = 5
-        y = 5
+    def Animacion(self,estrella,circulo,triangulo,rombo,cilindro,canvas):
+        x=5
+        y=5
+        
+        w=10
+        z=10
+        
+        o=5
+        p=5
 
+        q=10
+        r=10
+
+        s=5
+        t=5
         while True:
-            temp = randint(0,10)
+            velocidad=randint(0,10)
+            figura=self.canvas.coords(triangulo)
+            circu=self.canvas.coords(circulo)
+            estre=self.canvas.coords(estrella)
+            diamante=self.canvas.coords(rombo)
+            cilin=self.canvas.coords(cilindro)
+            if figura[0]<=0:
+                x=velocidad
+            elif figura[0]>=580:
+                x=-velocidad
+            elif figura[1]<=0:
+                y=velocidad
+            elif figura[1]>=580:
+                y=-velocidad
 
-            coords = self.canvas.coords(triangulo)
-            
-            if coords[0] <= 0:
-                x = temp
-            elif coords[0] >= 430:
-                x = -temp
-            elif coords[1] <= 0:
-                y = temp
-            elif coords[1] >= 430:
-                y = -temp
+            elif circu[0]<=0:
+                w=velocidad
+            elif circu[0]>=580:
+                w=-velocidad
+            elif circu[1]<=0:
+                z=velocidad
+            elif circu[1]>=580:
+                z=-velocidad
 
-            time.sleep(0.1)
+            elif estre[0]<=0:
+                o=velocidad
+            elif estre[0]>=580:
+                o=-velocidad
+            elif estre[1]<=0:
+                p=velocidad
+            elif estre[1]>=580:
+                p=-velocidad
+
+            elif diamante[0]<=0:
+                q=velocidad
+            elif diamante[0]>=580:
+                q=-velocidad
+            elif diamante[1]<=0:
+                r=velocidad
+            elif diamante[1]>=580:
+                r=-velocidad
+
+            elif cilin[0]<=0:
+                s=velocidad
+            elif cilin[0]>=580:
+                s=-velocidad
+            elif cilin[1]<=0:
+                t=velocidad
+            elif cilin[1]>=580:
+                t=-velocidad
+                
+            time.sleep(0.01)
 
             self.canvas.move(triangulo,x,y)
+            self.canvas.move(circulo,w,z)
+            self.canvas.move(estrella,o,p)
+            self.canvas.move(rombo,q,r)
+            self.canvas.move(cilindro,s,t)
 
 #Se define el movimiento de la figura
     def mover_cuadrado(self,event):
@@ -381,11 +431,12 @@ class Pantalla_n2:
             if y-10>0:
                 self.canvas.coords(self.cuadradoimg,x,y-10)
         elif event.char=="d":
-            if x+10<500-70:
+            if x+10<630-70:
                 self.canvas.coords(self.cuadradoimg,x+10,y)
         elif event.char=="a":
             if x-10>0:
                 self.canvas.coords(self.cuadradoimg,x-10,y)
+                
 #Funcion para pasar de nivel.
     #def pasar(self):
         #global mi
@@ -437,8 +488,30 @@ class Pantalla_n3:
         self.cuadrado=cargar_imagen('cuadrado.png')
         self.cuadradoimg = self.canvas.create_image(300,540,image=self.cuadrado,ancho=NW)
 
+        self.cuadrado=cargar_imagen('cuadrado.png')
+        self.cuadradoimg = self.canvas.create_image(300,540,image=self.cuadrado,ancho=NW)
+
         self.triangulo=cargar_imagen('triangulo.png')
         self.trianguloimg = self.canvas.create_image(randint(0,300),randint(0,300),image=self.triangulo,ancho=NW)
+
+        self.circulo=cargar_imagen('circulo.png')
+        self.circuloimg = self.canvas.create_image(randint(0,400),randint(0,400),image=self.circulo,ancho=NW)
+
+        self.estrella=cargar_imagen('estrella.png')
+        self.estrellaimg = self.canvas.create_image(randint(0,400),randint(0,400),image=self.estrella,ancho=NW)
+
+        self.rombo=cargar_imagen('rombo.png')
+        self.romboimg = self.canvas.create_image(randint(0,400),randint(0,400),image=self.rombo,ancho=NW)
+
+        self.cilindro=cargar_imagen('cilindro.png')
+        self.cilindroimg = self.canvas.create_image(randint(0,400),randint(0,400),image=self.cilindro,ancho=NW)
+
+        self.trapecio=cargar_imagen('trapecio.png')
+        self.trapecioimg = self.canvas.create_image(randint(0,400),randint(0,400),image=self.trapecio,ancho=NW)
+
+        self.rectangulo=cargar_imagen('cilindro.png')
+        self.rectanguloimg = self.canvas.create_image(randint(0,400),randint(0,400),image=self.rectangulo,ancho=NW)
+        
 
         #Boton para retornar a la pantalla inicial
         self.button_return=Button(self.canvas,text="Regresar",font=("Times New Roman",10),bg="snow",fg="black",command=ventana_principal.correr)
@@ -463,7 +536,7 @@ class Pantalla_n3:
         self.reloj.start()
 
         #Thread de la animacion
-        animacion = Thread(target = self.Animacion, args = (self.trianguloimg,self.canvas))
+        animacion = Thread(target = self.Animacion, args = (self.trianguloimg,self.circuloimg,self.estrellaimg,self.romboimg,self.cilindroimg,self.trapecioimg,self.rectanguloimg,self.canvas))
         animacion.start()
 
 #Funcion del cronometro
@@ -481,29 +554,110 @@ class Pantalla_n3:
             time.sleep(1)
             return self.tiempo()
 
-#Fuvion que mueve al enemigo
-    def Animacion(self,triangulo,canvas):
-        x = 5
-        y = 5
+#Fucion que mueve a los enemigos
+    def Animacion(self,estrella,circulo,triangulo,rombo,cilindro,trapecio,rectangulo,canvas):
+        x=5
+        y=5
+        
+        w=10
+        z=10
+        
+        o=5
+        p=5
 
+        q=10
+        r=10
+
+        s=5
+        t=5
+
+        a=5
+        b=5
+
+        c=10
+        d=10
+        
         while True:
-            temp = randint(0,10)
+            velocidad=randint(0,10)
+            figura=self.canvas.coords(triangulo)
+            circu=self.canvas.coords(circulo)
+            estre=self.canvas.coords(estrella)
+            diamante=self.canvas.coords(rombo)
+            cilin=self.canvas.coords(cilindro)
+            tra=self.canvas.coords(trapecio)
+            rec=self.canvas.coords(rectangulo)
+            if figura[0]<=0:
+                x=velocidad
+            elif figura[0]>=580:
+                x=-velocidad
+            elif figura[1]<=0:
+                y=velocidad
+            elif figura[1]>=580:
+                y=-velocidad
 
-            coords = self.canvas.coords(triangulo)
-            
-            if coords[0] <= 0:
-                x = temp
-            elif coords[0] >= 430:
-                x = -temp
-            elif coords[1] <= 0:
-                y = temp
-            elif coords[1] >= 430:
-                y = -temp
+            elif circu[0]<=0:
+                w=velocidad
+            elif circu[0]>=580:
+                w=-velocidad
+            elif circu[1]<=0:
+                z=velocidad
+            elif circu[1]>=580:
+                z=-velocidad
 
-            time.sleep(0.1)
+            elif estre[0]<=0:
+                o=velocidad
+            elif estre[0]>=580:
+                o=-velocidad
+            elif estre[1]<=0:
+                p=velocidad
+            elif estre[1]>=580:
+                p=-velocidad
+
+            elif diamante[0]<=0:
+                q=velocidad
+            elif diamante[0]>=580:
+                q=-velocidad
+            elif diamante[1]<=0:
+                r=velocidad
+            elif diamante[1]>=580:
+                r=-velocidad
+
+            elif cilin[0]<=0:
+                s=velocidad
+            elif cilin[0]>=580:
+                s=-velocidad
+            elif cilin[1]<=0:
+                t=velocidad
+            elif cilin[1]>=580:
+                t=-velocidad
+
+            elif tra[0]<=0:
+                a=velocidad
+            elif tra[0]>=580:
+                a=-velocidad
+            elif tra[1]<=0:
+                b=velocidad
+            elif tra[1]>=580:
+                b=-velocidad
+
+            elif rec[0]<=0:
+                c=velocidad
+            elif rec[0]>=580:
+                c=-velocidad
+            elif rec[1]<=0:
+                d=velocidad
+            elif rec[1]>=580:
+                d=-velocidad
+                
+            time.sleep(0.01)
 
             self.canvas.move(triangulo,x,y)
-
+            self.canvas.move(circulo,w,z)
+            self.canvas.move(estrella,o,p)
+            self.canvas.move(rombo,q,r)
+            self.canvas.move(cilindro,s,t)
+            self.canvas.move(trapecio,a,b)
+            self.canvas.move(rectangulo,c,d)
 
 
 #Se define el movimiento de la figura
@@ -516,7 +670,7 @@ class Pantalla_n3:
             if y-10>0:
                 self.canvas.coords(self.cuadradoimg,x,y-10)
         elif event.char=="d":
-            if x+10<500-70:
+            if x+10<630-70:
                 self.canvas.coords(self.cuadradoimg,x+10,y)
         elif event.char=="a":
             if x-10>0:
@@ -554,12 +708,7 @@ class Pantalla_n3:
             #return True
         #else:
             #return False
-    
-
-
-
-    
-
+      
 window=Tk()                       
 var=IntVar()
 ventana_principal = Ventana_inicio(window)
