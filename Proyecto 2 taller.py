@@ -166,7 +166,7 @@ class Pantalla_n1:
         self.reloj.start()
 
         #Thread de la animacion
-        animacion = Thread(target = self.Animacion, args = (self.trianguloimg,self.canvas))
+        animacion = Thread(target = self.Animacion, args = (self.estrellaimg,self.circuloimg,self.trianguloimg,self.canvas))
         animacion.start()
         
 #Funcion del cronometro
