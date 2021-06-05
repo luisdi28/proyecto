@@ -184,8 +184,7 @@ class Pantalla_n1:
             time.sleep(1)
             return self.tiempo()
 
-<<<<<<< Updated upstream
-#Fuvion que mueve al enemigo
+#Funcion que mueve al enemigo
     def Animacion(self,estrella,circulo,triangulo,canvas):
         x=5
         y=5
@@ -229,28 +228,6 @@ class Pantalla_n1:
                 p=-velocidad
                 
             time.sleep(0.01)
-=======
-#Funcion que mueve al enemigo
-    def Animacion(self,triangulo,canvas):
-        x = 5
-        y = 5
-
-        while True:
-            temp = randint(0,10)
-
-            coords = self.canvas.coords(triangulo)
-            
-            if coords[0] <= 0:
-                x = temp
-            elif coords[0] >= 430:
-                x = -temp
-            elif coords[1] <= 0:
-                y = temp
-            elif coords[1] >= 430:
-                y = -temp
-
-            time.sleep(0.05)
->>>>>>> Stashed changes
 
             self.canvas.move(triangulo,x,y)
             self.canvas.move(circulo,w,z)
@@ -277,6 +254,9 @@ class Pantalla_n1:
     #def avanzar(self):
         #ventana_principal.correr()
         
+        
+        
+
 #Se define el movimiento de la figura
     def mover_cuadrado(self,event):
         x,y=self.canvas.coords(self.cuadradoimg)
@@ -287,23 +267,24 @@ class Pantalla_n1:
             if y-10>0:
                 self.canvas.coords(self.cuadradoimg,x,y-10)
         elif event.char=="d":
-            if x+10<630-70:
+            if x+10<500-70:
                 self.canvas.coords(self.cuadradoimg,x+10,y)
         elif event.char=="a":
             if x-10>0:
                 self.canvas.coords(self.cuadradoimg,x-10,y)
                 
 #Funcion que hace que el jugador pierda vidas.
-    def colision(self):
-        global vidanave
-        triangulocoords=self.canvas.bbox(self.trianguloimg)
-        cuadradocoords=self.canvas.bbox(self.cuadradoimg)
-        if cuadradocoords[0]<triangulocoords[2] and cuadradocoords[2]>triangulocoords[0] and cuadradocoords[1]<triangulocoords[3] and triangulocoords[3]>cuadradocoords[1]:
-            vidanave-=1
-            self.vida.config(text="Vidas: " + str(vidanave))
-            return True
-        else:
-            return False
+    #def colision(self,shiping,nave,enemigos):
+        #global vidanave
+        #enemigoscoords=self.canvas.bbox(self.enemigos)
+        #navecoords=self.canvas.bbox
+        #if navecoords[0]<enemigoscoords[2] and nave[2]>enemigoscoords[0] and navecoords[1]<enemigoscoords[3] and enemigoscoords[3]>navecoords[1]:
+            #global vidanave
+            #vidanave-=1
+            #self.vida.config(text="Vidas: " + str(vidanave))
+            #return True
+        #else:
+            #return False
 
 #Clase pantalla del nivel 1  
 class Pantalla_n2:
@@ -400,7 +381,7 @@ class Pantalla_n2:
             if y-10>0:
                 self.canvas.coords(self.cuadradoimg,x,y-10)
         elif event.char=="d":
-            if x+10<630-70:
+            if x+10<500-70:
                 self.canvas.coords(self.cuadradoimg,x+10,y)
         elif event.char=="a":
             if x-10>0:
@@ -535,7 +516,7 @@ class Pantalla_n3:
             if y-10>0:
                 self.canvas.coords(self.cuadradoimg,x,y-10)
         elif event.char=="d":
-            if x+10<630-70:
+            if x+10<500-70:
                 self.canvas.coords(self.cuadradoimg,x+10,y)
         elif event.char=="a":
             if x-10>0:
