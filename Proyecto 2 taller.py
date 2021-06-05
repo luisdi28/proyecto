@@ -112,6 +112,11 @@ class Pantalla_n1:
         pass
 
     def correr(self):
+        global seg
+        seg=0
+        global mi
+        mi=0
+        
         WIDTH, HEIGHT = 600, 600
         self.canvas=Canvas(width=WIDTH, height=HEIGHT, bg="snow", highlightthickness=1, relief="ridge", highlightbackground="grey")
         self.canvas.place(x=0,y=0)
@@ -277,6 +282,11 @@ class Pantalla_n2:
         pass
 
     def correr(self):
+        global seg
+        seg=0
+        global mi
+        mi=0
+        
         self.canvas=Canvas(width=600, height=600, bg="snow", highlightthickness=1, relief="ridge", highlightbackground="grey")
         self.canvas.place(x=0,y=0)
 
@@ -478,6 +488,11 @@ class Pantalla_n3:
         pass
 
     def correr(self):
+        global seg
+        seg=0
+        global mi
+        mi=0
+        
         self.canvas=Canvas(width=600, height=600, bg="snow", highlightthickness=1, relief="ridge", highlightbackground="grey")
         self.canvas.place(x=0,y=0)
 
