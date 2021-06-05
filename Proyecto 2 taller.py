@@ -145,9 +145,9 @@ class Pantalla_n1:
         self.minuto=Label(self.canvas,text="",font=("Times New Roman",12),fg="black",bg="snow",width=1,height=1)
         self.minuto.place(x=5,y=3)
         self.segundo=Label(self.canvas,text="",font=("Times New Roman",12),fg="black",bg="snow",width=1,height=1)
-        self.segundo.place(x=35,y=3)
+        self.segundo.place(x=65,y=3)
         self.dos_puntos=Label(self.canvas,text=":",font=("Times New Roman",12),fg="black",bg="snow",width=1,height=1)
-        self.dos_puntos.place(x=65,y=3)
+        self.dos_puntos.place(x=35,y=3)
 
         #Thread del cronometro (lo inicia)
         self.reloj=Thread(target=self.tiempo,args=[])
@@ -167,6 +167,29 @@ class Pantalla_n1:
             self.segundo.configure(text=seg)
             time.sleep(1)
             return self.tiempo()
+
+#Funcion para pasar de nivel.
+    #def pasar(self):
+        #global mi
+        #global seg
+        #global vidanave
+        #vidanave = 3
+        #if mi==1:
+            #self.Pantalla_n2.correr()
+        #elif vidanave==0:
+            #return mensaeje
+
+    #def mensaje(self):
+        #self.go=Label(self.canvas,text="GAME OVER",font=("Times New Roman",18),fg="red2",bg="black")
+        #self.go.place(x=250,y=300)
+        #self.button_volver=Button(self.canvas,text="volver",font=("Times New Roman",10),bg="snow",fg="black",command=avanzar)
+        #self.button_volver.place(x=300,y=350,width=100,height=30)
+
+    #def avanzar(self):
+        #ventana_principal.correr()
+        
+        
+        
 
 #Se define el movimiento de la figura
     def mover_cuadrado(self,event):
@@ -228,9 +251,9 @@ class Pantalla_n2:
         self.minuto=Label(self.canvas,text="",font=("Times New Roman",12),fg="black",bg="snow",width=1,height=1)
         self.minuto.place(x=5,y=3)
         self.segundo=Label(self.canvas,text="",font=("Times New Roman",12),fg="black",bg="snow",width=1,height=1)
-        self.segundo.place(x=35,y=3)
+        self.segundo.place(x=65,y=3)
         self.dos_puntos=Label(self.canvas,text=":",font=("Times New Roman",12),fg="black",bg="snow",width=1,height=1)
-        self.dos_puntos.place(x=65,y=3)
+        self.dos_puntos.place(x=35,y=3)
 
         #Thread del cronometro (lo inicia)
         self.reloj=Thread(target=self.tiempo,args=[])
@@ -266,6 +289,25 @@ class Pantalla_n2:
         elif event.char=="a":
             if x-10>0:
                 self.canvas.coords(self.cuadradoimg,x-10,y)
+#Funcion para pasar de nivel.
+    #def pasar(self):
+        #global mi
+        #global seg
+        #global vidanave
+        #vidanave = 3
+        #if mi==1:
+            #self.Pantalla_n2.correr()
+        #elif vidanave==0:
+            #return mensaeje
+
+    #def mensaje(self):
+        #self.go=Label(self.canvas,text="GAME OVER",font=("Times New Roman",18),fg="red2",bg="black")
+        #self.go.place(x=250,y=300)
+        #self.button_volver=Button(self.canvas,text="volver",font=("Times New Roman",10),bg="snow",fg="black",command=avanzar)
+        #self.button_volver.place(x=300,y=350,width=100,height=30)
+
+    #def avanzar(self):
+        #ventana_principal.correr()
                 
 #Funcion que hace que el jugador pierda vidas.
     #def colision(self,shiping,nave,enemigos):
@@ -312,9 +354,9 @@ class Pantalla_n3:
         self.minuto=Label(self.canvas,text="",font=("Times New Roman",12),fg="black",bg="snow",width=1,height=1)
         self.minuto.place(x=5,y=3)
         self.segundo=Label(self.canvas,text="",font=("Times New Roman",12),fg="black",bg="snow",width=1,height=1)
-        self.segundo.place(x=35,y=3)
+        self.segundo.place(x=65,y=3)
         self.dos_puntos=Label(self.canvas,text=":",font=("Times New Roman",12),fg="black",bg="snow",width=1,height=1)
-        self.dos_puntos.place(x=65,y=3)
+        self.dos_puntos.place(x=35,y=3)
 
         #Thread del cronometro (lo inicia)
         self.reloj=Thread(target=self.tiempo,args=[])
@@ -350,6 +392,26 @@ class Pantalla_n3:
         elif event.char=="a":
             if x-10>0:
                 self.canvas.coords(self.cuadradoimg,x-10,y)
+
+#Funcion para pasar de nivel.
+    #def pasar(self):
+        #global mi
+        #global seg
+        #global vidanave
+        #vidanave = 3
+        #if mi==1:
+            #self.Pantalla_n2.correr()
+        #elif vidanave==0:
+            #return mensaeje
+
+    #def mensaje(self):
+        #self.go=Label(self.canvas,text="GAME OVER",font=("Times New Roman",18),fg="red2",bg="black")
+        #self.go.place(x=250,y=300)
+        #self.button_volver=Button(self.canvas,text="volver",font=("Times New Roman",10),bg="snow",fg="black",command=avanzar)
+        #self.button_volver.place(x=300,y=350,width=100,height=30)
+
+    #def avanzar(self):
+        #ventana_principal.correr()
 
 #Funcion que hace que el jugador pierda vidas.
     #def colision(self,shiping,nave,enemigos):
