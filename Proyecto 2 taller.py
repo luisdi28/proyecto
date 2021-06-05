@@ -42,6 +42,8 @@ class Ventana_inicio:
 
 #Función para volver a la ventana inicial
     def regresar_ventana(self):
+        global cerrarthread
+        cerrarthread=True
         ventana_principal.correr()
         
     #Funcion para correr lo que se tiene en la ventana    
@@ -134,6 +136,12 @@ class Pantalla_n1:
 
         self.triangulo=cargar_imagen('triangulo.png')
         self.trianguloimg = self.canvas.create_image(randint(0,300),randint(0,300),image=self.triangulo,ancho=NW)
+
+        self.circulo=cargar_imagen('circulo.png')
+        self.circuloimg = self.canvas.create_image(randint(0,400),randint(0,400),image=self.circulo,ancho=NW)
+
+        self.estrella=cargar_imagen('estrella.png')
+        self.estrellaimg = self.canvas.create_image(randint(0,400),randint(0,400),image=self.estrella,ancho=NW)
         
         #Boton para retornar a la pantalla inicial
         self.button_return=Button(self.canvas,text="Regresar",font=("Times New Roman",10),bg="snow",fg="black",command=ventana_principal.correr)
@@ -176,27 +184,54 @@ class Pantalla_n1:
             time.sleep(1)
             return self.tiempo()
 
-    def Animacion(self,triangulo,canvas):
-        x = 5
-        y = 5
-
+#Fuvion que mueve al enemigo
+    def Animacion(self,estrella,circulo,triangulo,canvas):
+        x=5
+        y=5
+        
+        w=10
+        z=10
+        
+        o=5
+        p=5
+        
         while True:
-            temp = randint(0,10)
+            velocidad=randint(0,10)
+            figura=self.canvas.coords(triangulo)
+            circu=self.canvas.coords(circulo)
+            estre=self.canvas.coords(estrella)
+            if figura[0]<=0:
+                x=velocidad
+            elif figura[0]>=580:
+                x=-velocidad
+            elif figura[1]<=0:
+                y=velocidad
+            elif figura[1]>=580:
+                y=-velocidad
 
-            coords = self.canvas.coords(triangulo)
-            
-            if coords[0] <= 0:
-                x = temp
-            elif coords[0] >= 430:
-                x = -temp
-            elif coords[1] <= 0:
-                y = temp
-            elif coords[1] >= 430:
-                y = -temp
+            elif circu[0]<=0:
+                w=velocidad
+            elif circu[0]>=580:
+                w=-velocidad
+            elif circu[1]<=0:
+                z=velocidad
+            elif circu[1]>=580:
+                z=-velocidad
 
-            time.sleep(0.1)
+            elif estre[0]<=0:
+                o=velocidad
+            elif estre[0]>=580:
+                o=-velocidad
+            elif estre[1]<=0:
+                p=velocidad
+            elif estre[1]>=580:
+                p=-velocidad
+                
+            time.sleep(0.01)
 
             self.canvas.move(triangulo,x,y)
+            self.canvas.move(circulo,w,z)
+            self.canvas.move(estrella,o,p)
             
 
 #Funcion para pasar de nivel.
