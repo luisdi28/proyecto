@@ -37,6 +37,8 @@ class Ventana_inicio:
         
     #Funcion para correr lo que se tiene en la ventana    
     def correr(self):
+        global cerrarthread
+        cerrarthread=False
         self.About=About()
         self.Pantalla_n1=Pantalla_n1()
         self.Pantalla_n2=Pantalla_n2()
@@ -116,6 +118,8 @@ class Pantalla_n1:
         seg=0
         global mi
         mi=0
+        global cerrarthread
+        cerrarthread=True
         
         WIDTH, HEIGHT = 600, 600
         self.canvas=Canvas(width=WIDTH, height=HEIGHT, bg="snow", highlightthickness=1, relief="ridge", highlightbackground="grey")
@@ -138,7 +142,7 @@ class Pantalla_n1:
         self.estrellaimg = self.canvas.create_image(randint(0,400),randint(0,400),image=self.estrella,ancho=NW)
         
         #Boton para retornar a la pantalla inicial
-        self.button_return=Button(self.canvas,text="Regresar",font=("Times New Roman",10),bg="snow",fg="black",command=ventana_principal.correr)
+        self.button_return=Button(self.canvas,text="Regresar",font=("Times New Roman",10),bg="snow",fg="black",command=ventana_principal.regresar_ventana)
         self.button_return.place(x=15,y=565,width=100,height=30)
 
         #Label que muestra la puntuacion y la vida
@@ -168,7 +172,7 @@ class Pantalla_n1:
         global seg
         global mi
         global cerrarthread
-        if not cerrarthread:
+        if cerrarthread:
             seg+=1
             if seg==60:
                 seg=0
@@ -180,52 +184,57 @@ class Pantalla_n1:
 
 #Fuvion que mueve al enemigo
     def Animacion(self,estrella,circulo,triangulo,canvas):
-        x=5
-        y=5
+        global cerrarthread
+        if  cerrarthread:
+            x=5
+            y=5
         
-        w=10
-        z=10
+            w=10
+            z=10
         
-        o=5
-        p=5
+            o=5
+            p=5
         
-        while True:
-            velocidad=randint(0,10)
-            figura=self.canvas.coords(triangulo)
-            circu=self.canvas.coords(circulo)
-            estre=self.canvas.coords(estrella)
-            if figura[0]<=0:
-                x=velocidad
-            elif figura[0]>=580:
-                x=-velocidad
-            elif figura[1]<=0:
-                y=velocidad
-            elif figura[1]>=580:
-                y=-velocidad
+            while True:
+                if not cerrarthread:
+                    break
+                else:
+                    velocidad=randint(0,10)
+                    figura=self.canvas.coords(triangulo)
+                    circu=self.canvas.coords(circulo)
+                    estre=self.canvas.coords(estrella)
+                    if figura[0]<=0:
+                        x=velocidad
+                    elif figura[0]>=580:
+                        x=-velocidad
+                    elif figura[1]<=0:
+                        y=velocidad
+                    elif figura[1]>=580:
+                        y=-velocidad
 
-            elif circu[0]<=0:
-                w=velocidad
-            elif circu[0]>=580:
-                w=-velocidad
-            elif circu[1]<=0:
-                z=velocidad
-            elif circu[1]>=580:
-                z=-velocidad
+                    elif circu[0]<=0:
+                        w=velocidad
+                    elif circu[0]>=580:
+                        w=-velocidad
+                    elif circu[1]<=0:
+                        z=velocidad
+                    elif circu[1]>=580:
+                        z=-velocidad
 
-            elif estre[0]<=0:
-                o=velocidad
-            elif estre[0]>=580:
-                o=-velocidad
-            elif estre[1]<=0:
-                p=velocidad
-            elif estre[1]>=580:
-                p=-velocidad
-                
-            time.sleep(0.01)
+                    elif estre[0]<=0:
+                        o=velocidad
+                    elif estre[0]>=580:
+                        o=-velocidad
+                    elif estre[1]<=0:
+                        p=velocidad
+                    elif estre[1]>=580:
+                        p=-velocidad
+                        
+                    time.sleep(0.01)
 
-            self.canvas.move(triangulo,x,y)
-            self.canvas.move(circulo,w,z)
-            self.canvas.move(estrella,o,p)
+                    self.canvas.move(triangulo,x,y)
+                    self.canvas.move(circulo,w,z)
+                    self.canvas.move(estrella,o,p)
             
 #Funcion para pasar de nivel.
     #def pasar(self):
@@ -316,7 +325,7 @@ class Pantalla_n2:
         self.cilindroimg = self.canvas.create_image(randint(0,400),randint(0,400),image=self.cilindro,ancho=NW)
 
         #Boton para retornar a la pantalla inicial
-        self.button_return=Button(self.canvas,text="Regresar",font=("Times New Roman",10),bg="snow",fg="black",command=ventana_principal.correr)
+        self.button_return=Button(self.canvas,text="Regresar",font=("Times New Roman",10),bg="snow",fg="black",command=ventana_principal.regresar_ventana)
         self.button_return.place(x=15,y=565,width=100,height=30)
 
         #Label que muestra la puntuacion y la vida
@@ -529,7 +538,7 @@ class Pantalla_n3:
         
 
         #Boton para retornar a la pantalla inicial
-        self.button_return=Button(self.canvas,text="Regresar",font=("Times New Roman",10),bg="snow",fg="black",command=ventana_principal.correr)
+        self.button_return=Button(self.canvas,text="Regresar",font=("Times New Roman",10),bg="snow",fg="black",command=ventana_principal.regresar_ventana)
         self.button_return.place(x=15,y=565,width=100,height=30)
 
         #Label que muestra la puntuacion y la vida
