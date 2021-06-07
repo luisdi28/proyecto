@@ -179,6 +179,7 @@ class Pantalla_n1:
                 mi+=1
                 self.minuto.configure(text=mi)
             self.segundo.configure(text=seg)
+            self.puntaje()
             time.sleep(1)
             return self.tiempo()
 
@@ -238,15 +239,12 @@ class Pantalla_n1:
                     self.colision()
             
 #Funcion para pasar de nivel.
-    #def pasar(self):
-        #global mi
-        #global seg
-        #global vidanave
-        #vidanave = 3
-        #if mi==1:
-            #self.Pantalla_n2.correr()
-        #elif vidanave==0:
-            #return mensaeje
+    def puntaje(self):
+        global seg
+        global puntaje
+        if seg%1==0:
+            puntaje=puntaje+1
+            self.puntuacion.configure(text="Puntaje: "+str(puntaje))
 
     #def avanzar(self):
         #ventana_principal.correr()
