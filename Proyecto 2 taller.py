@@ -295,6 +295,8 @@ class Pantalla_n2:
         seg=0
         global mi
         mi=0
+        global cerrarthread
+        cerrarthread=True
         
         self.canvas=Canvas(width=600, height=600, bg="snow", highlightthickness=1, relief="ridge", highlightbackground="grey")
         self.canvas.place(x=0,y=0)
@@ -355,7 +357,7 @@ class Pantalla_n2:
         global seg
         global mi
         global cerrarthread
-        if not cerrarthread:
+        if cerrarthread:
             seg+=1
             if seg==60:
                 seg=0
@@ -366,79 +368,84 @@ class Pantalla_n2:
             return self.tiempo()
         
     def Animacion(self,estrella,circulo,triangulo,rombo,cilindro,canvas):
-        x=5
-        y=5
+        global cerrarthread
+        if  cerrarthread:
+            x=5
+            y=5
         
-        w=10
-        z=10
+            w=10
+            z=10
         
-        o=5
-        p=5
+            o=5
+            p=5
 
-        q=10
-        r=10
+            q=10
+            r=10
 
-        s=5
-        t=5
+            s=5
+            t=5
         while True:
-            velocidad=randint(0,10)
-            figura=self.canvas.coords(triangulo)
-            circu=self.canvas.coords(circulo)
-            estre=self.canvas.coords(estrella)
-            diamante=self.canvas.coords(rombo)
-            cilin=self.canvas.coords(cilindro)
-            if figura[0]<=0:
-                x=velocidad
-            elif figura[0]>=580:
-                x=-velocidad
-            elif figura[1]<=0:
-                y=velocidad
-            elif figura[1]>=580:
-                y=-velocidad
+                if not cerrarthread:
+                    break
+                else:
+                    velocidad=randint(0,10)
+                    figura=self.canvas.coords(triangulo)
+                    circu=self.canvas.coords(circulo)
+                    estre=self.canvas.coords(estrella)
+                    diamante=self.canvas.coords(rombo)
+                    cilin=self.canvas.coords(cilindro)
+                    if figura[0]<=0:
+                        x=velocidad
+                    elif figura[0]>=580:
+                        x=-velocidad
+                    elif figura[1]<=0:
+                        y=velocidad
+                    elif figura[1]>=580:
+                        y=-velocidad
 
-            elif circu[0]<=0:
-                w=velocidad
-            elif circu[0]>=580:
-                w=-velocidad
-            elif circu[1]<=0:
-                z=velocidad
-            elif circu[1]>=580:
-                z=-velocidad
+                    elif circu[0]<=0:
+                        w=velocidad
+                    elif circu[0]>=580:
+                        w=-velocidad
+                    elif circu[1]<=0:
+                        z=velocidad
+                    elif circu[1]>=580:
+                        z=-velocidad
 
-            elif estre[0]<=0:
-                o=velocidad
-            elif estre[0]>=580:
-                o=-velocidad
-            elif estre[1]<=0:
-                p=velocidad
-            elif estre[1]>=580:
-                p=-velocidad
+                    elif estre[0]<=0:
+                        o=velocidad
+                    elif estre[0]>=580:
+                        o=-velocidad
+                    elif estre[1]<=0:
+                        p=velocidad
+                    elif estre[1]>=580:
+                        p=-velocidad
 
-            elif diamante[0]<=0:
-                q=velocidad
-            elif diamante[0]>=580:
-                q=-velocidad
-            elif diamante[1]<=0:
-                r=velocidad
-            elif diamante[1]>=580:
-                r=-velocidad
+                    elif diamante[0]<=0:
+                        q=velocidad
+                    elif diamante[0]>=580:
+                        q=-velocidad
+                    elif diamante[1]<=0:
+                        r=velocidad
+                    elif diamante[1]>=580:
+                        r=-velocidad
 
-            elif cilin[0]<=0:
-                s=velocidad
-            elif cilin[0]>=580:
-                s=-velocidad
-            elif cilin[1]<=0:
-                t=velocidad
-            elif cilin[1]>=580:
-                t=-velocidad
-                
-            time.sleep(0.01)
+                    elif cilin[0]<=0:
+                        s=velocidad
+                    elif cilin[0]>=580:
+                        s=-velocidad
+                    elif cilin[1]<=0:
+                        t=velocidad
+                    elif cilin[1]>=580:
+                        t=-velocidad
+                        
+                    time.sleep(0.01)
 
-            self.canvas.move(triangulo,x,y)
-            self.canvas.move(circulo,w,z)
-            self.canvas.move(estrella,o,p)
-            self.canvas.move(rombo,q,r)
-            self.canvas.move(cilindro,s,t)
+                    self.canvas.move(triangulo,x,y)
+                    self.canvas.move(circulo,w,z)
+                    self.canvas.move(estrella,o,p)
+                    self.canvas.move(rombo,q,r)
+                    self.canvas.move(cilindro,s,t)
 
 #Se define el movimiento de la figura
     def mover_cuadrado(self,event):
@@ -501,6 +508,8 @@ class Pantalla_n3:
         seg=0
         global mi
         mi=0
+        global cerrarthread
+        cerrarthread=True
         
         self.canvas=Canvas(width=600, height=600, bg="snow", highlightthickness=1, relief="ridge", highlightbackground="grey")
         self.canvas.place(x=0,y=0)
@@ -568,7 +577,7 @@ class Pantalla_n3:
         global seg
         global mi
         global cerrarthread
-        if not cerrarthread:
+        if cerrarthread:
             seg+=1
             if seg==60:
                 seg=0
@@ -580,108 +589,113 @@ class Pantalla_n3:
 
 #Fucion que mueve a los enemigos
     def Animacion(self,estrella,circulo,triangulo,rombo,cilindro,trapecio,rectangulo,canvas):
-        x=5
-        y=5
+        global cerrarthread
+        if  cerrarthread:
+            x=5
+            y=5
         
-        w=10
-        z=10
+            w=10
+            z=10
         
-        o=5
-        p=5
+            o=5
+            p=5
 
-        q=10
-        r=10
+            q=10
+            r=10
 
-        s=5
-        t=5
+            s=5
+            t=5
 
-        a=5
-        b=5
+            a=5
+            b=5
 
-        c=10
-        d=10
+            c=10
+            d=10
         
         while True:
-            velocidad=randint(0,10)
-            figura=self.canvas.coords(triangulo)
-            circu=self.canvas.coords(circulo)
-            estre=self.canvas.coords(estrella)
-            diamante=self.canvas.coords(rombo)
-            cilin=self.canvas.coords(cilindro)
-            tra=self.canvas.coords(trapecio)
-            rec=self.canvas.coords(rectangulo)
-            if figura[0]<=0:
-                x=velocidad
-            elif figura[0]>=580:
-                x=-velocidad
-            elif figura[1]<=0:
-                y=velocidad
-            elif figura[1]>=580:
-                y=-velocidad
+                if not cerrarthread:
+                    break
+                else:
+                    velocidad=randint(0,10)
+                    figura=self.canvas.coords(triangulo)
+                    circu=self.canvas.coords(circulo)
+                    estre=self.canvas.coords(estrella)
+                    diamante=self.canvas.coords(rombo)
+                    cilin=self.canvas.coords(cilindro)
+                    tra=self.canvas.coords(trapecio)
+                    rec=self.canvas.coords(rectangulo)
+                    if figura[0]<=0:
+                        x=velocidad
+                    elif figura[0]>=580:
+                        x=-velocidad
+                    elif figura[1]<=0:
+                        y=velocidad
+                    elif figura[1]>=580:
+                        y=-velocidad
 
-            elif circu[0]<=0:
-                w=velocidad
-            elif circu[0]>=580:
-                w=-velocidad
-            elif circu[1]<=0:
-                z=velocidad
-            elif circu[1]>=580:
-                z=-velocidad
+                    elif circu[0]<=0:
+                        w=velocidad
+                    elif circu[0]>=580:
+                        w=-velocidad
+                    elif circu[1]<=0:
+                        z=velocidad
+                    elif circu[1]>=580:
+                        z=-velocidad
 
-            elif estre[0]<=0:
-                o=velocidad
-            elif estre[0]>=580:
-                o=-velocidad
-            elif estre[1]<=0:
-                p=velocidad
-            elif estre[1]>=580:
-                p=-velocidad
+                    elif estre[0]<=0:
+                        o=velocidad
+                    elif estre[0]>=580:
+                        o=-velocidad
+                    elif estre[1]<=0:
+                        p=velocidad
+                    elif estre[1]>=580:
+                        p=-velocidad
 
-            elif diamante[0]<=0:
-                q=velocidad
-            elif diamante[0]>=580:
-                q=-velocidad
-            elif diamante[1]<=0:
-                r=velocidad
-            elif diamante[1]>=580:
-                r=-velocidad
+                    elif diamante[0]<=0:
+                        q=velocidad
+                    elif diamante[0]>=580:
+                        q=-velocidad
+                    elif diamante[1]<=0:
+                        r=velocidad
+                    elif diamante[1]>=580:
+                        r=-velocidad
 
-            elif cilin[0]<=0:
-                s=velocidad
-            elif cilin[0]>=580:
-                s=-velocidad
-            elif cilin[1]<=0:
-                t=velocidad
-            elif cilin[1]>=580:
-                t=-velocidad
+                    elif cilin[0]<=0:
+                        s=velocidad
+                    elif cilin[0]>=580:
+                        s=-velocidad
+                    elif cilin[1]<=0:
+                        t=velocidad
+                    elif cilin[1]>=580:
+                        t=-velocidad
 
-            elif tra[0]<=0:
-                a=velocidad
-            elif tra[0]>=580:
-                a=-velocidad
-            elif tra[1]<=0:
-                b=velocidad
-            elif tra[1]>=580:
-                b=-velocidad
+                    elif tra[0]<=0:
+                        a=velocidad
+                    elif tra[0]>=580:
+                        a=-velocidad
+                    elif tra[1]<=0:
+                        b=velocidad
+                    elif tra[1]>=580:
+                        b=-velocidad
 
-            elif rec[0]<=0:
-                c=velocidad
-            elif rec[0]>=580:
-                c=-velocidad
-            elif rec[1]<=0:
-                d=velocidad
-            elif rec[1]>=580:
-                d=-velocidad
-                
-            time.sleep(0.01)
+                    elif rec[0]<=0:
+                        c=velocidad
+                    elif rec[0]>=580:
+                        c=-velocidad
+                    elif rec[1]<=0:
+                        d=velocidad
+                    elif rec[1]>=580:
+                        d=-velocidad
+                        
+                    time.sleep(0.01)
 
-            self.canvas.move(triangulo,x,y)
-            self.canvas.move(circulo,w,z)
-            self.canvas.move(estrella,o,p)
-            self.canvas.move(rombo,q,r)
-            self.canvas.move(cilindro,s,t)
-            self.canvas.move(trapecio,a,b)
-            self.canvas.move(rectangulo,c,d)
+                    self.canvas.move(triangulo,x,y)
+                    self.canvas.move(circulo,w,z)
+                    self.canvas.move(estrella,o,p)
+                    self.canvas.move(rombo,q,r)
+                    self.canvas.move(cilindro,s,t)
+                    self.canvas.move(trapecio,a,b)
+                    self.canvas.move(rectangulo,c,d)
 
 
 #Se define el movimiento de la figura
