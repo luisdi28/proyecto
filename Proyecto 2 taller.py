@@ -18,6 +18,8 @@ global seg
 seg=0
 global cerrarthread
 cerrarthread=False
+global sihaycolision
+sihaycolision=False
 
 def cargar_imagen(nombre):
     ruta=os.path.join('photos',nombre)
@@ -264,24 +266,32 @@ class Pantalla_n1:
                 
 #Funcion que hace que el jugador pierda vidas.
     def colision(self):
+        global sihaycolision
         global vidanave
         triangulocoords=self.canvas.bbox(self.trianguloimg)
         cuadradocoords=self.canvas.bbox(self.cuadradoimg)
         estrellacoords=self.canvas.bbox(self.estrellaimg)
         circulocoords=self.canvas.bbox(self.circuloimg)
-        if cuadradocoords[0]<triangulocoords[2] and cuadradocoords[2]>triangulocoords[0] and cuadradocoords[1]<triangulocoords[3] and triangulocoords[3]>cuadradocoords[1]:
-            vidanave=vidanave-1
-            self.vida.config(text="Vidas: " + str(vidanave))
-            return True
-        elif cuadradocoords[0]<estrellacoords[2] and cuadradocoords[2]>estrellacoords[0] and cuadradocoords[1]<estrellacoords[3] and estrellacoords[3]>cuadradocoords[1]:
-            vidanave-=1
-            self.vida.config(text="Vidas: " + str(vidanave))
-            return True
-        elif cuadradocoords[0]<circulocoords[2] and cuadradocoords[2]>circulocoords[0] and cuadradocoords[1]<circulocoords[3] and circulocoords[3]>cuadradocoords[1]:
-            vidanave-=1
-            self.vida.config(text="Vidas: " + str(vidanave))
-            return True
+        if cuadradocoords[0]<=triangulocoords[2] and cuadradocoords[2]>=triangulocoords[0] and cuadradocoords[1]<=triangulocoords[3] and cuadradocoords[3]>=triangulocoords[1]:
+            if not sihaycolision:
+                sihaycolision=True
+                vidanave=vidanave-1
+                self.vida.config(text="Vidas: " + str(vidanave))
+                return True
+        elif cuadradocoords[0]<=estrellacoords[2] and cuadradocoords[2]>=estrellacoords[0] and cuadradocoords[1]<=estrellacoords[3] and cuadradocoords[3]>=estrellacoords[1]:
+            if not sihaycolision:
+                sihaycolision=True
+                vidanave=vidanave-1
+                self.vida.config(text="Vidas: " + str(vidanave))
+                return True
+        elif cuadradocoords[0]<=circulocoords[2] and cuadradocoords[2]>=circulocoords[0] and cuadradocoords[1]<=circulocoords[3] and cuadradocoords[3]>=circulocoords[1]:
+            if not sihaycolision:
+                sihaycolision=True
+                vidanave=vidanave-1
+                self.vida.config(text="Vidas: " + str(vidanave))
+                return True
         else:
+            sihaycolision=False
             return False
 
 #Clase pantalla del nivel 1  
@@ -305,9 +315,6 @@ class Pantalla_n2:
         window.bind_all("<KeyRelease>",self.mover_cuadrado)
         
         #Se carga la imagen de la figura que usara el jugador y el emnemigo
-        self.cuadrado=cargar_imagen('cuadrado.png')
-        self.cuadradoimg = self.canvas.create_image(300,540,image=self.cuadrado,ancho=NW)
-
         self.cuadrado=cargar_imagen('cuadrado.png')
         self.cuadradoimg = self.canvas.create_image(300,540,image=self.cuadrado,ancho=NW)
 
@@ -475,6 +482,7 @@ class Pantalla_n2:
 
 #Funcion que hace que el jugador pierda vidas.
     def colision(self):
+        global sihaycolision
         global vidanave
         triangulocoords=self.canvas.bbox(self.trianguloimg)
         cuadradocoords=self.canvas.bbox(self.cuadradoimg)
@@ -482,27 +490,38 @@ class Pantalla_n2:
         circulocoords=self.canvas.bbox(self.circuloimg)
         rombocoords=self.canvas.bbox(self.romboimg)
         cilindocoords=self.canvas.bbox(self.cilindroimg)
-        if cuadradocoords[0]<triangulocoords[2] and cuadradocoords[2]>triangulocoords[0] and cuadradocoords[1]<triangulocoords[3] and triangulocoords[3]>cuadradocoords[1]:
-            vidanave=vidanave-1
-            self.vida.config(text="Vidas: " + str(vidanave))
-            return True
-        elif cuadradocoords[0]<estrellacoords[2] and cuadradocoords[2]>estrellacoords[0] and cuadradocoords[1]<estrellacoords[3] and estrellacoords[3]>cuadradocoords[1]:
-            vidanave-=1
-            self.vida.config(text="Vidas: " + str(vidanave))
-            return True
-        elif cuadradocoords[0]<circulocoords[2] and cuadradocoords[2]>circulocoords[0] and cuadradocoords[1]<circulocoords[3] and circulocoords[3]>cuadradocoords[1]:
-            vidanave-=1
-            self.vida.config(text="Vidas: " + str(vidanave))
-            return True
-        elif cuadradocoords[0]<rombocoords[2] and cuadradocoords[2]>rombocoords[0] and cuadradocoords[1]<rombocoords[3] and rombocoords[3]>cuadradocoords[1]:
-            vidanave-=1
-            self.vida.config(text="Vidas: " + str(vidanave))
-            return True
-        elif cuadradocoords[0]<cilindocoords[2] and cuadradocoords[2]>cilindocoords[0] and cuadradocoords[1]<cilindocoords[3] and cilindocoords[3]>cuadradocoords[1]:
-            vidanave-=1
-            self.vida.config(text="Vidas: " + str(vidanave))
-            return True
+        if cuadradocoords[0]<=triangulocoords[2] and cuadradocoords[2]>=triangulocoords[0] and cuadradocoords[1]<=triangulocoords[3] and cuadradocoords[3]>=triangulocoords[1]:
+            if not sihaycolision:
+                sihaycolision=True
+                vidanave=vidanave-1
+                self.vida.config(text="Vidas: " + str(vidanave))
+                return True
+        elif cuadradocoords[0]<=estrellacoords[2] and cuadradocoords[2]>=estrellacoords[0] and cuadradocoords[1]<=estrellacoords[3] and cuadradocoords[3]>=estrellacoords[1]:
+            if not sihaycolision:
+                sihaycolision=True
+                vidanave=vidanave-1
+                self.vida.config(text="Vidas: " + str(vidanave))
+                return True
+        elif cuadradocoords[0]<=circulocoords[2] and cuadradocoords[2]>=circulocoords[0] and cuadradocoords[1]<=circulocoords[3] and cuadradocoords[3]>=circulocoords[1]:
+            if not sihaycolision:
+                sihaycolision=True
+                vidanave=vidanave-1
+                self.vida.config(text="Vidas: " + str(vidanave))
+                return True
+        elif cuadradocoords[0]<=rombocoords[2] and cuadradocoords[2]>=rombocoords[0] and cuadradocoords[1]<=rombocoords[3] and cuadradocoords[3]>=rombocoords[1]:
+            if not sihaycolision:
+                sihaycolision=True
+                vidanave=vidanave-1
+                self.vida.config(text="Vidas: " + str(vidanave))
+                return True
+        elif cuadradocoords[0]<=cilindocoords[2] and cuadradocoords[2]>=cilindocoords[0] and cuadradocoords[1]<=cilindocoords[3] and cuadradocoords[3]>=cilindocoords[1]:
+            if not sihaycolision:
+                sihaycolision=True
+                vidanave=vidanave-1
+                self.vida.config(text="Vidas: " + str(vidanave))
+                return True
         else:
+            sihaycolision=False
             return False
                 
 #Clase pantalla del nivel 1  
@@ -529,9 +548,6 @@ class Pantalla_n3:
         self.cuadrado=cargar_imagen('cuadrado.png')
         self.cuadradoimg = self.canvas.create_image(300,540,image=self.cuadrado,ancho=NW)
 
-        self.cuadrado=cargar_imagen('cuadrado.png')
-        self.cuadradoimg = self.canvas.create_image(300,540,image=self.cuadrado,ancho=NW)
-
         self.triangulo=cargar_imagen('triangulo.png')
         self.trianguloimg = self.canvas.create_image(randint(0,300),randint(0,300),image=self.triangulo,ancho=NW)
 
@@ -550,7 +566,7 @@ class Pantalla_n3:
         self.trapecio=cargar_imagen('trapecio.png')
         self.trapecioimg = self.canvas.create_image(randint(0,400),randint(0,400),image=self.trapecio,ancho=NW)
 
-        self.rectangulo=cargar_imagen('cilindro.png')
+        self.rectangulo=cargar_imagen('rectangulo.png')
         self.rectanguloimg = self.canvas.create_image(randint(0,400),randint(0,400),image=self.rectangulo,ancho=NW)
         
 
@@ -731,7 +747,9 @@ class Pantalla_n3:
             if x-10>0:
                 self.canvas.coords(self.cuadradoimg,x-10,y)
 
+#Funcion que hace que el jugador pierda vidas.                
     def colision(self):
+        global sihaycolision
         global vidanave
         triangulocoords=self.canvas.bbox(self.trianguloimg)
         cuadradocoords=self.canvas.bbox(self.cuadradoimg)
@@ -741,35 +759,50 @@ class Pantalla_n3:
         cilindocoords=self.canvas.bbox(self.cilindroimg)
         trapeciocoords=self.canvas.bbox(self.trapecioimg)
         rectangulocoords=self.canvas.bbox(self.rectanguloimg)
-        if cuadradocoords[0]<triangulocoords[2] and cuadradocoords[2]>triangulocoords[0] and cuadradocoords[1]<triangulocoords[3] and triangulocoords[3]>cuadradocoords[1]:
-            vidanave=vidanave-1
-            self.vida.config(text="Vidas: " + str(vidanave))
-            return True
-        elif cuadradocoords[0]<estrellacoords[2] and cuadradocoords[2]>estrellacoords[0] and cuadradocoords[1]<estrellacoords[3] and estrellacoords[3]>cuadradocoords[1]:
-            vidanave-=1
-            self.vida.config(text="Vidas: " + str(vidanave))
-            return True
-        elif cuadradocoords[0]<circulocoords[2] and cuadradocoords[2]>circulocoords[0] and cuadradocoords[1]<circulocoords[3] and circulocoords[3]>cuadradocoords[1]:
-            vidanave-=1
-            self.vida.config(text="Vidas: " + str(vidanave))
-            return True
-        elif cuadradocoords[0]<rombocoords[2] and cuadradocoords[2]>rombocoords[0] and cuadradocoords[1]<rombocoords[3] and rombocoords[3]>cuadradocoords[1]:
-            vidanave-=1
-            self.vida.config(text="Vidas: " + str(vidanave))
-            return True
-        elif cuadradocoords[0]<cilindocoords[2] and cuadradocoords[2]>cilindocoords[0] and cuadradocoords[1]<cilindocoords[3] and cilindocoords[3]>cuadradocoords[1]:
-            vidanave-=1
-            self.vida.config(text="Vidas: " + str(vidanave))
-            return True
-        elif cuadradocoords[0]<trapeciocoords[2] and cuadradocoords[2]>trapeciocoords[0] and cuadradocoords[1]<trapeciocoords[3] and trapeciocoords[3]>cuadradocoords[1]:
-            vidanave-=1
-            self.vida.config(text="Vidas: " + str(vidanave))
-            return True
-        elif cuadradocoords[0]<rectangulocoords[2] and cuadradocoords[2]>rectangulocoords[0] and cuadradocoords[1]<rectangulocoords[3] and rectangulocoords[3]>cuadradocoords[1]:
-            vidanave-=1
-            self.vida.config(text="Vidas: " + str(vidanave))
-            return True
+        if cuadradocoords[0]<=triangulocoords[2] and cuadradocoords[2]>=triangulocoords[0] and cuadradocoords[1]<=triangulocoords[3] and cuadradocoords[3]>=triangulocoords[1]:
+            if not sihaycolision:
+                sihaycolision=True
+                vidanave=vidanave-1
+                self.vida.config(text="Vidas: " + str(vidanave))
+                return True
+        elif cuadradocoords[0]<=estrellacoords[2] and cuadradocoords[2]>=estrellacoords[0] and cuadradocoords[1]<=estrellacoords[3] and cuadradocoords[3]>=estrellacoords[1]:
+            if not sihaycolision:
+                sihaycolision=True
+                vidanave=vidanave-1
+                self.vida.config(text="Vidas: " + str(vidanave))
+                return True
+        elif cuadradocoords[0]<=circulocoords[2] and cuadradocoords[2]>=circulocoords[0] and cuadradocoords[1]<=circulocoords[3] and cuadradocoords[3]>=circulocoords[1]:
+            if not sihaycolision:
+                sihaycolision=True
+                vidanave=vidanave-1
+                self.vida.config(text="Vidas: " + str(vidanave))
+                return True
+        elif cuadradocoords[0]<=rombocoords[2] and cuadradocoords[2]>=rombocoords[0] and cuadradocoords[1]<=rombocoords[3] and cuadradocoords[3]>=rombocoords[1]:
+            if not sihaycolision:
+                sihaycolision=True
+                vidanave=vidanave-1
+                self.vida.config(text="Vidas: " + str(vidanave))
+                return True
+        elif cuadradocoords[0]<=cilindocoords[2] and cuadradocoords[2]>=cilindocoords[0] and cuadradocoords[1]<=cilindocoords[3] and cuadradocoords[3]>=cilindocoords[1]:
+            if not sihaycolision:
+                sihaycolision=True
+                vidanave=vidanave-1
+                self.vida.config(text="Vidas: " + str(vidanave))
+                return True
+        elif cuadradocoords[0]<=trapeciocoords[2] and cuadradocoords[2]>=trapeciocoords[0] and cuadradocoords[1]<=trapeciocoords[3] and cuadradocoords[3]>=trapeciocoords[1]:
+            if not sihaycolision:
+                sihaycolision=True
+                vidanave=vidanave-1
+                self.vida.config(text="Vidas: " + str(vidanave))
+                return True
+        elif cuadradocoords[0]<=rectangulocoords[2] and cuadradocoords[2]>=rectangulocoords[0] and cuadradocoords[1]<=rectangulocoords[3] and cuadradocoords[3]>=rectangulocoords[1]:
+            if not sihaycolision:
+                sihaycolision=True
+                vidanave=vidanave-1
+                self.vida.config(text="Vidas: " + str(vidanave))
+                return True
         else:
+            sihaycolision=False
             return False
       
 window=Tk()                       
@@ -780,4 +813,3 @@ window.minsize(600,600)
 ventana_principal.correr()
 window.resizable(False,False)
 window.mainloop()
-
