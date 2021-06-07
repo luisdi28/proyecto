@@ -235,6 +235,7 @@ class Pantalla_n1:
                     self.canvas.move(triangulo,x,y)
                     self.canvas.move(circulo,w,z)
                     self.canvas.move(estrella,o,p)
+                    self.colision()
             
 #Funcion para pasar de nivel.
     #def pasar(self):
@@ -277,7 +278,17 @@ class Pantalla_n1:
         global vidanave
         triangulocoords=self.canvas.bbox(self.trianguloimg)
         cuadradocoords=self.canvas.bbox(self.cuadradoimg)
+        estrellacoords=self.canvas.bbox(self.estrellaimg)
+        circulocoords=self.canvas.bbox(self.circuloimg)
         if cuadradocoords[0]<triangulocoords[2] and cuadradocoords[2]>triangulocoords[0] and cuadradocoords[1]<triangulocoords[3] and triangulocoords[3]>cuadradocoords[1]:
+            vidanave=vidanave-1
+            self.vida.config(text="Vidas: " + str(vidanave))
+            return True
+        elif cuadradocoords[0]<estrellacoords[2] and cuadradocoords[2]>estrellacoords[0] and cuadradocoords[1]<estrellacoords[3] and estrellacoords[3]>cuadradocoords[1]:
+            vidanave-=1
+            self.vida.config(text="Vidas: " + str(vidanave))
+            return True
+        elif cuadradocoords[0]<circulocoords[2] and cuadradocoords[2]>circulocoords[0] and cuadradocoords[1]<circulocoords[3] and circulocoords[3]>cuadradocoords[1]:
             vidanave-=1
             self.vida.config(text="Vidas: " + str(vidanave))
             return True
