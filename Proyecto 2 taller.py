@@ -260,7 +260,7 @@ class Pantalla_n1:
     def mover_cuadrado(self,event):
         x,y=self.canvas.coords(self.cuadradoimg)
         if event.char=="s":
-            if y+10<500-80:
+            if y+10<640-80:
                 self.canvas.coords(self.cuadradoimg,x,y+10)
         elif event.char=="w":
             if y-10>0:
@@ -451,7 +451,7 @@ class Pantalla_n2:
     def mover_cuadrado(self,event):
         x,y=self.canvas.coords(self.cuadradoimg)
         if event.char=="s":
-            if y+10<500-80:
+            if y+10<640-80:
                 self.canvas.coords(self.cuadradoimg,x,y+10)
         elif event.char=="w":
             if y-10>0:
@@ -702,7 +702,7 @@ class Pantalla_n3:
     def mover_cuadrado(self,event):
         x,y=self.canvas.coords(self.cuadradoimg)
         if event.char=="s":
-            if y+10<500-80:
+            if y+10<640-80:
                 self.canvas.coords(self.cuadradoimg,x,y+10)
         elif event.char=="w":
             if y-10>0:
