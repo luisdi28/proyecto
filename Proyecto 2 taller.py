@@ -245,9 +245,6 @@ class Pantalla_n1:
         if seg%1==0:
             puntaje=puntaje+1
             self.puntuacion.configure(text="Puntaje: "+str(puntaje))
-
-    #def avanzar(self):
-        #ventana_principal.correr()
         
 #Se define el movimiento de la figura
     def mover_cuadrado(self,event):
@@ -367,6 +364,7 @@ class Pantalla_n2:
                 mi+=1
                 self.minuto.configure(text=mi)
             self.segundo.configure(text=seg)
+            self.puntaje()
             time.sleep(1)
             return self.tiempo()
         
@@ -451,6 +449,14 @@ class Pantalla_n2:
                     self.canvas.move(cilindro,s,t)
                     self.colision()
 
+#Funcion para pasar de nivel.
+    def puntaje(self):
+        global seg
+        global puntaje
+        if seg%1==0:
+            puntaje=puntaje+3
+            self.puntuacion.configure(text="Puntaje: "+str(puntaje))
+
 #Se define el movimiento de la figura
     def mover_cuadrado(self,event):
         x,y=self.canvas.coords(self.cuadradoimg)
@@ -498,20 +504,6 @@ class Pantalla_n2:
             return True
         else:
             return False
-                
-#Funcion para pasar de nivel.
-    #def pasar(self):
-        #global mi
-        #global seg
-        #global vidanave
-        #vidanave = 3
-        #if mi==1:
-            #self.Pantalla_n2.correr()
-        #elif vidanave==0:
-            #return avanzar
-        
-    #def avanzar(self):
-        #ventana_principal.correr()
                 
 #Clase pantalla del nivel 1  
 class Pantalla_n3:
@@ -600,6 +592,7 @@ class Pantalla_n3:
                 mi+=1
                 self.minuto.configure(text=mi)
             self.segundo.configure(text=seg)
+            self.puntaje()
             time.sleep(1)
             return self.tiempo()
 
@@ -714,6 +707,13 @@ class Pantalla_n3:
                     self.canvas.move(rectangulo,c,d)
                     self.colision()
 
+#Funcion para pasar de nivel.
+    def puntaje(self):
+        global seg
+        global puntaje
+        if seg%1==0:
+            puntaje=puntaje+5
+            self.puntuacion.configure(text="Puntaje: "+str(puntaje))
 
 #Se define el movimiento de la figura
     def mover_cuadrado(self,event):
@@ -771,21 +771,6 @@ class Pantalla_n3:
             return True
         else:
             return False
-
-#Funcion para pasar de nivel.
-    #def pasar(self):
-        #global mi
-        #global seg
-        #global vidanave
-        #vidanave = 3
-        #if mi==1:
-            #self.Pantalla_n2.correr()
-        #elif vidanave==0:
-            #return avanzar
-
-    #def avanzar(self):
-        #ventana_principal.correr()
-
       
 window=Tk()                       
 var=IntVar()
