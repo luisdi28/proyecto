@@ -58,7 +58,7 @@ class Ventana_inicio:
         self.entrada.place(x=355,y=125,width=100, height=30)
         #Recibimiento
         self.recibimiento=Label(self.canvas,text= "La geometria, de una forma nunca antes vista.")
-        self.recibimiento.place(x=50,y=200,width=500,height=30)
+        self.recibimiento.place(x=150,y=200,width=350,height=30)
         #Label para elegir el nivel
         self.nivel=Label(self.canvas,text="Elige el nivel: ",font=("Times New Roman",15),fg="white",bg="black")
         self.nivel.place(x=250,y=300)
@@ -247,12 +247,6 @@ class Pantalla_n1:
             #self.Pantalla_n2.correr()
         #elif vidanave==0:
             #return mensaeje
-
-    #def mensaje(self):
-        #self.go=Label(self.canvas,text="GAME OVER",font=("Times New Roman",18),fg="red2",bg="black")
-        #self.go.place(x=250,y=300)
-        #self.button_volver=Button(self.canvas,text="volver",font=("Times New Roman",10),bg="snow",fg="black",command=avanzar)
-        #self.button_volver.place(x=300,y=350,width=100,height=30)
 
     #def avanzar(self):
         #ventana_principal.correr()
@@ -457,6 +451,7 @@ class Pantalla_n2:
                     self.canvas.move(estrella,o,p)
                     self.canvas.move(rombo,q,r)
                     self.canvas.move(cilindro,s,t)
+                    self.colision()
 
 #Se define el movimiento de la figura
     def mover_cuadrado(self,event):
@@ -473,6 +468,38 @@ class Pantalla_n2:
         elif event.char=="a":
             if x-10>0:
                 self.canvas.coords(self.cuadradoimg,x-10,y)
+
+#Funcion que hace que el jugador pierda vidas.
+    def colision(self):
+        global vidanave
+        triangulocoords=self.canvas.bbox(self.trianguloimg)
+        cuadradocoords=self.canvas.bbox(self.cuadradoimg)
+        estrellacoords=self.canvas.bbox(self.estrellaimg)
+        circulocoords=self.canvas.bbox(self.circuloimg)
+        rombocoords=self.canvas.bbox(self.romboimg)
+        cilindocoords=self.canvas.bbox(self.cilindroimg)
+        if cuadradocoords[0]<triangulocoords[2] and cuadradocoords[2]>triangulocoords[0] and cuadradocoords[1]<triangulocoords[3] and triangulocoords[3]>cuadradocoords[1]:
+            vidanave=vidanave-1
+            self.vida.config(text="Vidas: " + str(vidanave))
+            return True
+        elif cuadradocoords[0]<estrellacoords[2] and cuadradocoords[2]>estrellacoords[0] and cuadradocoords[1]<estrellacoords[3] and estrellacoords[3]>cuadradocoords[1]:
+            vidanave-=1
+            self.vida.config(text="Vidas: " + str(vidanave))
+            return True
+        elif cuadradocoords[0]<circulocoords[2] and cuadradocoords[2]>circulocoords[0] and cuadradocoords[1]<circulocoords[3] and circulocoords[3]>cuadradocoords[1]:
+            vidanave-=1
+            self.vida.config(text="Vidas: " + str(vidanave))
+            return True
+        elif cuadradocoords[0]<rombocoords[2] and cuadradocoords[2]>rombocoords[0] and cuadradocoords[1]<rombocoords[3] and rombocoords[3]>cuadradocoords[1]:
+            vidanave-=1
+            self.vida.config(text="Vidas: " + str(vidanave))
+            return True
+        elif cuadradocoords[0]<cilindocoords[2] and cuadradocoords[2]>cilindocoords[0] and cuadradocoords[1]<cilindocoords[3] and cilindocoords[3]>cuadradocoords[1]:
+            vidanave-=1
+            self.vida.config(text="Vidas: " + str(vidanave))
+            return True
+        else:
+            return False
                 
 #Funcion para pasar de nivel.
     #def pasar(self):
@@ -483,31 +510,11 @@ class Pantalla_n2:
         #if mi==1:
             #self.Pantalla_n2.correr()
         #elif vidanave==0:
-            #return mensaeje
-
-    #def mensaje(self):
-        #self.go=Label(self.canvas,text="GAME OVER",font=("Times New Roman",18),fg="red2",bg="black")
-        #self.go.place(x=250,y=300)
-        #self.button_volver=Button(self.canvas,text="volver",font=("Times New Roman",10),bg="snow",fg="black",command=avanzar)
-        #self.button_volver.place(x=300,y=350,width=100,height=30)
-
+            #return avanzar
+        
     #def avanzar(self):
         #ventana_principal.correr()
                 
-#Funcion que hace que el jugador pierda vidas.
-    #def colision(self,shiping,nave,enemigos):
-        #global vidanave
-        #enemigoscoords=self.canvas.bbox(self.enemigos)
-        #navecoords=self.canvas.bbox
-        #if navecoords[0]<enemigoscoords[2] and nave[2]>enemigoscoords[0] and navecoords[1]<enemigoscoords[3] and enemigoscoords[3]>navecoords[1]:
-            #global vidanave
-            #vidanave-=1
-            #self.vida.config(text="Vidas: " + str(vidanave))
-            #return True
-        #else:
-            #return False
-
-
 #Clase pantalla del nivel 1  
 class Pantalla_n3:
     def __init__(self):
@@ -707,6 +714,7 @@ class Pantalla_n3:
                     self.canvas.move(cilindro,s,t)
                     self.canvas.move(trapecio,a,b)
                     self.canvas.move(rectangulo,c,d)
+                    self.colision()
 
 
 #Se define el movimiento de la figura
@@ -725,6 +733,47 @@ class Pantalla_n3:
             if x-10>0:
                 self.canvas.coords(self.cuadradoimg,x-10,y)
 
+    def colision(self):
+        global vidanave
+        triangulocoords=self.canvas.bbox(self.trianguloimg)
+        cuadradocoords=self.canvas.bbox(self.cuadradoimg)
+        estrellacoords=self.canvas.bbox(self.estrellaimg)
+        circulocoords=self.canvas.bbox(self.circuloimg)
+        rombocoords=self.canvas.bbox(self.romboimg)
+        cilindocoords=self.canvas.bbox(self.cilindroimg)
+        trapeciocoords=self.canvas.bbox(self.trapecioimg)
+        rectangulocoords=self.canvas.bbox(self.rectanguloimg)
+        if cuadradocoords[0]<triangulocoords[2] and cuadradocoords[2]>triangulocoords[0] and cuadradocoords[1]<triangulocoords[3] and triangulocoords[3]>cuadradocoords[1]:
+            vidanave=vidanave-1
+            self.vida.config(text="Vidas: " + str(vidanave))
+            return True
+        elif cuadradocoords[0]<estrellacoords[2] and cuadradocoords[2]>estrellacoords[0] and cuadradocoords[1]<estrellacoords[3] and estrellacoords[3]>cuadradocoords[1]:
+            vidanave-=1
+            self.vida.config(text="Vidas: " + str(vidanave))
+            return True
+        elif cuadradocoords[0]<circulocoords[2] and cuadradocoords[2]>circulocoords[0] and cuadradocoords[1]<circulocoords[3] and circulocoords[3]>cuadradocoords[1]:
+            vidanave-=1
+            self.vida.config(text="Vidas: " + str(vidanave))
+            return True
+        elif cuadradocoords[0]<rombocoords[2] and cuadradocoords[2]>rombocoords[0] and cuadradocoords[1]<rombocoords[3] and rombocoords[3]>cuadradocoords[1]:
+            vidanave-=1
+            self.vida.config(text="Vidas: " + str(vidanave))
+            return True
+        elif cuadradocoords[0]<cilindocoords[2] and cuadradocoords[2]>cilindocoords[0] and cuadradocoords[1]<cilindocoords[3] and cilindocoords[3]>cuadradocoords[1]:
+            vidanave-=1
+            self.vida.config(text="Vidas: " + str(vidanave))
+            return True
+        elif cuadradocoords[0]<trapeciocoords[2] and cuadradocoords[2]>trapeciocoords[0] and cuadradocoords[1]<trapeciocoords[3] and trapeciocoords[3]>cuadradocoords[1]:
+            vidanave-=1
+            self.vida.config(text="Vidas: " + str(vidanave))
+            return True
+        elif cuadradocoords[0]<rectangulocoords[2] and cuadradocoords[2]>rectangulocoords[0] and cuadradocoords[1]<rectangulocoords[3] and rectangulocoords[3]>cuadradocoords[1]:
+            vidanave-=1
+            self.vida.config(text="Vidas: " + str(vidanave))
+            return True
+        else:
+            return False
+
 #Funcion para pasar de nivel.
     #def pasar(self):
         #global mi
@@ -734,29 +783,11 @@ class Pantalla_n3:
         #if mi==1:
             #self.Pantalla_n2.correr()
         #elif vidanave==0:
-            #return mensaeje
-
-    #def mensaje(self):
-        #self.go=Label(self.canvas,text="GAME OVER",font=("Times New Roman",18),fg="red2",bg="black")
-        #self.go.place(x=250,y=300)
-        #self.button_volver=Button(self.canvas,text="volver",font=("Times New Roman",10),bg="snow",fg="black",command=avanzar)
-        #self.button_volver.place(x=300,y=350,width=100,height=30)
+            #return avanzar
 
     #def avanzar(self):
         #ventana_principal.correr()
 
-#Funcion que hace que el jugador pierda vidas.
-    #def colision(self,shiping,nave,enemigos):
-        #global vidanave
-        #enemigoscoords=self.canvas.bbox(self.enemigos)
-        #navecoords=self.canvas.bbox
-        #if navecoords[0]<enemigoscoords[2] and nave[2]>enemigoscoords[0] and navecoords[1]<enemigoscoords[3] and enemigoscoords[3]>navecoords[1]:
-            #global vidanave
-            #vidanave-=1
-            #self.vida.config(text="Vidas: " + str(vidanave))
-            #return True
-        #else:
-            #return False
       
 window=Tk()                       
 var=IntVar()
