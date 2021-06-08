@@ -129,6 +129,10 @@ class Pantalla_n1:
 
         #Permite detectar cualquier boton que se asigne
         window.bind_all("<KeyRelease>",self.mover_cuadrado)
+
+        #Imagen de fondo
+        self.fondo=cargar_imagen('espacio.png')
+        self.fondoimg = self.canvas.create_image(0,0,image=self.fondo,ancho=NW)
         
         #Se carga la imagen de la figura que usara el jugador y el enemigo
         self.cuadrado=cargar_imagen('cuadrado.png')
@@ -147,11 +151,13 @@ class Pantalla_n1:
         self.button_return=Button(self.canvas,text="Regresar",font=("Times New Roman",10),bg="snow",fg="black",command=ventana_principal.regresar_ventana)
         self.button_return.place(x=15,y=565,width=100,height=30)
 
-        #Label que muestra la puntuacion y la vida
+        #Label que muestra la puntuacion, la vida y el nombre del jugador 
         self.puntuacion= Label(self.canvas,text= "Puntaje: " + str(puntaje), font=("Times New Roman",9), fg="snow", bg="grey")
         self.puntuacion.place(x=425,y=575,width=65, height=20)
         self.vida=Label(self.canvas,text= "Vidas: " + str(vidanave), font=("Times New Roman",9), fg="snow", bg="grey")
         self.vida.place(x=525,y=575,width=65, height=20)
+        #self.mostrar= Label(self.canvas,text="", font=("Times New Roman",9), fg="snow", bg="grey")
+        #self.mostrar.place(x=500,y=575,width=65, height=20)
 
         #Cronometro
         self.minuto=Label(self.canvas,text="",font=("Times New Roman",12),fg="black",bg="snow",width=1,height=1)
@@ -313,8 +319,15 @@ class Pantalla_n2:
 
         #Permite detectar cualquier boton que se asigne
         window.bind_all("<KeyRelease>",self.mover_cuadrado)
+
+        #Imagen de fondo
+        self.fondo=cargar_imagen('espacio.png')
+        self.fondoimg = self.canvas.create_image(0,0,image=self.fondo,ancho=NW)
         
         #Se carga la imagen de la figura que usara el jugador y el emnemigo
+        self.cuadrado=cargar_imagen('cuadrado.png')
+        self.cuadradoimg = self.canvas.create_image(300,540,image=self.cuadrado,ancho=NW)
+
         self.cuadrado=cargar_imagen('cuadrado.png')
         self.cuadradoimg = self.canvas.create_image(300,540,image=self.cuadrado,ancho=NW)
 
@@ -337,11 +350,13 @@ class Pantalla_n2:
         self.button_return=Button(self.canvas,text="Regresar",font=("Times New Roman",10),bg="snow",fg="black",command=ventana_principal.regresar_ventana)
         self.button_return.place(x=15,y=565,width=100,height=30)
 
-        #Label que muestra la puntuacion y la vida
+        #Label que muestra la puntuacion, la vida y el nombre del jugador 
         self.puntuacion= Label(self.canvas,text= "Puntaje: " + str(puntaje), font=("Times New Roman",9), fg="snow", bg="grey")
         self.puntuacion.place(x=425,y=575,width=65, height=20)
         self.vida=Label(self.canvas,text= "Vidas: " + str(vidanave), font=("Times New Roman",9), fg="snow", bg="grey")
         self.vida.place(x=525,y=575,width=65, height=20)
+        #self.mostrar= Label(self.canvas,text="", font=("Times New Roman",9), fg="snow", bg="grey")
+        #self.mostrar.place(x=500,y=575,width=65, height=20)
 
         #Cronometro
         self.minuto=Label(self.canvas,text="",font=("Times New Roman",12),fg="black",bg="snow",width=1,height=1)
@@ -543,8 +558,15 @@ class Pantalla_n3:
 
         #Permite detectar cualquier boton que se asigne
         window.bind_all("<KeyRelease>",self.mover_cuadrado)
+
+        #Imagen de fondo
+        self.fondo=cargar_imagen('espacio.png')
+        self.fondoimg = self.canvas.create_image(0,0,image=self.fondo,ancho=NW)
         
         #Se carga la imagen de la figura que usara el jugador y el enemigo
+        self.cuadrado=cargar_imagen('cuadrado.png')
+        self.cuadradoimg = self.canvas.create_image(300,540,image=self.cuadrado,ancho=NW)
+
         self.cuadrado=cargar_imagen('cuadrado.png')
         self.cuadradoimg = self.canvas.create_image(300,540,image=self.cuadrado,ancho=NW)
 
@@ -574,11 +596,13 @@ class Pantalla_n3:
         self.button_return=Button(self.canvas,text="Regresar",font=("Times New Roman",10),bg="snow",fg="black",command=ventana_principal.regresar_ventana)
         self.button_return.place(x=15,y=565,width=100,height=30)
 
-        #Label que muestra la puntuacion y la vida
+        #Label que muestra la puntuacion, la vida y el nombre del jugador 
         self.puntuacion= Label(self.canvas,text= "Puntaje: " + str(puntaje), font=("Times New Roman",9), fg="snow", bg="grey")
         self.puntuacion.place(x=425,y=575,width=65, height=20)
         self.vida=Label(self.canvas,text= "Vidas: " + str(vidanave), font=("Times New Roman",9), fg="snow", bg="grey")
         self.vida.place(x=525,y=575,width=65, height=20)
+        #self.mostrar= Label(self.canvas,text="", font=("Times New Roman",9), fg="snow", bg="grey")
+        #self.mostrar.place(x=500,y=575,width=65, height=20)
 
         #Cronometro
         self.minuto=Label(self.canvas,text="",font=("Times New Roman",12),fg="black",bg="snow",width=1,height=1)
@@ -813,3 +837,4 @@ window.minsize(600,600)
 ventana_principal.correr()
 window.resizable(False,False)
 window.mainloop()
+
