@@ -45,10 +45,13 @@ class Ventana_inicio:
         self.Pantalla_n1=Pantalla_n1()
         self.Pantalla_n2=Pantalla_n2()
         self.Pantalla_n3=Pantalla_n3()
-        
+
         #Se define el canvas         
         self.canvas = Canvas(self.master,width=600,height=600,highlightthickness=0,relief='ridge',bg="black")
         self.canvas.place(x=0,y=0)
+        #Imagen de fondo
+        self.fondo=cargar_imagen('ventana.png')
+        self.fondoimg = self.canvas.create_image(0,0,image=self.fondo,ancho=NW)
         #Titulo
         self.titulo=Label(self.canvas,text="Geometry Dodge",font=("Times New Roman",15),fg="white",bg="black")
         self.titulo.place(x=250,y=20)
@@ -135,7 +138,7 @@ class Pantalla_n1:
         window.bind_all("<KeyRelease>",self.mover_cuadrado)
 
         #Imagen de fondo
-        self.fondo=cargar_imagen('espacio.png')
+        self.fondo=cargar_imagen('fondo1.png')
         self.fondoimg = self.canvas.create_image(0,0,image=self.fondo,ancho=NW)
         
         #Se carga la imagen de la figura que usara el jugador y el enemigo
@@ -327,7 +330,7 @@ class Pantalla_n2:
         window.bind_all("<KeyRelease>",self.mover_cuadrado)
 
         #Imagen de fondo
-        self.fondo=cargar_imagen('espacio.png')
+        self.fondo=cargar_imagen('fondo2.png')
         self.fondoimg = self.canvas.create_image(0,0,image=self.fondo,ancho=NW)
         
         #Se carga la imagen de la figura que usara el jugador y el emnemigo
@@ -568,7 +571,7 @@ class Pantalla_n3:
         window.bind_all("<KeyRelease>",self.mover_cuadrado)
 
         #Imagen de fondo
-        self.fondo=cargar_imagen('espacio.png')
+        self.fondo=cargar_imagen('fondo3.png')
         self.fondoimg = self.canvas.create_image(0,0,image=self.fondo,ancho=NW)
         
         #Se carga la imagen de la figura que usara el jugador y el enemigo
@@ -838,6 +841,9 @@ class Pantalla_n3:
         else:
             sihaycolision=False
             return False
+
+#class Ganadores(self):
+    
       
 window=Tk()                       
 var=IntVar()
