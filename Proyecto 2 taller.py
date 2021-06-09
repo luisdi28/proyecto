@@ -123,6 +123,10 @@ class Pantalla_n1:
 
     def correr(self,nombre):
         self.nombre=nombre
+        global vidanave
+        vidanave=3
+        global puntaje
+        puntaje=0
         global seg
         seg=0
         global mi
@@ -316,6 +320,10 @@ class Pantalla_n2:
 
     def correr(self,nombre):
         self.nombre=nombre
+        global vidanave
+        vidanave=3
+        global puntaje
+        puntaje=0
         global seg
         seg=0
         global mi
@@ -558,6 +566,11 @@ class Pantalla_n3:
 
     def correr(self,nombre):
         self.nombre=nombre
+        global vidanave
+        vidanave=3
+        global puntaje
+        puntaje=0
+        global seg
         seg=0
         global mi
         mi=0
