@@ -52,6 +52,9 @@ class Ventana_inicio:
         #Titulo
         self.titulo=Label(self.canvas,text="Geometry Dodge",font=("Times New Roman",15),fg="white",bg="black")
         self.titulo.place(x=250,y=20)
+        #Label de Bienvenida
+        self.bienvenida=Label(self.canvas,text="Bienvenid@",font=("Times New Roman",15),fg="white",bg="black")
+        self.bienvenida.place(x=270,y=75)
         #Label del nombre
         self.nombre=Label(self.canvas,text="Inserte nombre")
         self.nombre.place(x=200,y=125,width=100,height=30)
@@ -84,7 +87,7 @@ class Ventana_inicio:
             self.About.correr()
     def ir_juego(self):
         if self.entrada.get()!="" and var.get()==1:
-            self.Pantalla_n1.correr()
+            self.Pantalla_n1.correr(self.entrada.get())
         elif self.entrada.get()!="" and var.get()==2:
             self.Pantalla_n2.correr()
         elif self.entrada.get()!="" and var.get()==3:
@@ -115,7 +118,8 @@ class Pantalla_n1:
 
         pass
 
-    def correr(self):
+    def correr(self,nombre):
+        self.nombre=nombre
         global seg
         seg=0
         global mi
@@ -156,8 +160,9 @@ class Pantalla_n1:
         self.puntuacion.place(x=425,y=575,width=65, height=20)
         self.vida=Label(self.canvas,text= "Vidas: " + str(vidanave), font=("Times New Roman",9), fg="snow", bg="grey")
         self.vida.place(x=525,y=575,width=65, height=20)
-        #self.mostrar= Label(self.canvas,text="", font=("Times New Roman",9), fg="snow", bg="grey")
-        #self.mostrar.place(x=500,y=575,width=65, height=20)
+        #Label con el Nombre
+        self.mostrar= Label(self.canvas,text=""+self.nombre, font=("Times New Roman",9), fg="snow", bg="grey")
+        self.mostrar.place(x=320,y=575,width=65, height=20)
 
         #Cronometro
         self.minuto=Label(self.canvas,text="",font=("Times New Roman",12),fg="black",bg="snow",width=1,height=1)
