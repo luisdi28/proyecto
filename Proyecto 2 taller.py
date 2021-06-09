@@ -57,13 +57,13 @@ class Ventana_inicio:
         self.bienvenida.place(x=270,y=75)
         #Label del nombre
         self.nombre=Label(self.canvas,text="Inserte nombre")
-        self.nombre.place(x=200,y=125,width=100,height=30)
+        self.nombre.place(x=200,y=150,width=100,height=30)
         #Entrada de nombre
         self.entrada=Entry(self.canvas)
-        self.entrada.place(x=355,y=125,width=100, height=30)
+        self.entrada.place(x=355,y=150,width=100, height=30)
         #Recibimiento
         self.recibimiento=Label(self.canvas,text= "La geometria, de una forma nunca antes vista.")
-        self.recibimiento.place(x=150,y=200,width=350,height=30)
+        self.recibimiento.place(x=150,y=225,width=350,height=30)
         #Label para elegir el nivel
         self.nivel=Label(self.canvas,text="Elige el nivel: ",font=("Times New Roman",15),fg="white",bg="black")
         self.nivel.place(x=250,y=300)
@@ -89,9 +89,9 @@ class Ventana_inicio:
         if self.entrada.get()!="" and var.get()==1:
             self.Pantalla_n1.correr(self.entrada.get())
         elif self.entrada.get()!="" and var.get()==2:
-            self.Pantalla_n2.correr()
+            self.Pantalla_n2.correr(self.entrada.get())
         elif self.entrada.get()!="" and var.get()==3:
-            self.Pantalla_n3.correr()
+            self.Pantalla_n3.correr(self.entrada.get())
   
 #Pantalla about 
 class About:
@@ -311,7 +311,8 @@ class Pantalla_n2:
 
         pass
 
-    def correr(self):
+    def correr(self,nombre):
+        self.nombre=nombre
         global seg
         seg=0
         global mi
@@ -360,8 +361,10 @@ class Pantalla_n2:
         self.puntuacion.place(x=425,y=575,width=65, height=20)
         self.vida=Label(self.canvas,text= "Vidas: " + str(vidanave), font=("Times New Roman",9), fg="snow", bg="grey")
         self.vida.place(x=525,y=575,width=65, height=20)
-        #self.mostrar= Label(self.canvas,text="", font=("Times New Roman",9), fg="snow", bg="grey")
-        #self.mostrar.place(x=500,y=575,width=65, height=20)
+        
+        #Label con el Nombre
+        self.mostrar= Label(self.canvas,text=""+self.nombre, font=("Times New Roman",9), fg="snow", bg="grey")
+        self.mostrar.place(x=320,y=575,width=65, height=20)
 
         #Cronometro
         self.minuto=Label(self.canvas,text="",font=("Times New Roman",12),fg="black",bg="snow",width=1,height=1)
@@ -550,8 +553,8 @@ class Pantalla_n3:
 
         pass
 
-    def correr(self):
-        global seg
+    def correr(self,nombre):
+        self.nombre=nombre
         seg=0
         global mi
         mi=0
@@ -606,8 +609,10 @@ class Pantalla_n3:
         self.puntuacion.place(x=425,y=575,width=65, height=20)
         self.vida=Label(self.canvas,text= "Vidas: " + str(vidanave), font=("Times New Roman",9), fg="snow", bg="grey")
         self.vida.place(x=525,y=575,width=65, height=20)
-        #self.mostrar= Label(self.canvas,text="", font=("Times New Roman",9), fg="snow", bg="grey")
-        #self.mostrar.place(x=500,y=575,width=65, height=20)
+        
+        #Label con el Nombre
+        self.mostrar= Label(self.canvas,text=""+self.nombre, font=("Times New Roman",9), fg="snow", bg="grey")
+        self.mostrar.place(x=320,y=575,width=65, height=20)
 
         #Cronometro
         self.minuto=Label(self.canvas,text="",font=("Times New Roman",12),fg="black",bg="snow",width=1,height=1)
