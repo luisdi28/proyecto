@@ -220,14 +220,14 @@ class Pantalla_n1:
     def ventana_win(self):
         global seg
         global cerrarthread
-        if seg==59:
+        if seg==3:
             self.canvas.place_forget()
             cerrarthread=False
             return self.win.place(x=0,y=0)
 
         #Comando que lo envia a la pantalla
     def siguiente(self):
-        Pantalla_n2.correr(self)
+        Pantalla_n2.correr(self,self.nombre)
 
         #Funcion para ir a la pantalla de derrota
     def ventana_lose(self):
@@ -825,7 +825,7 @@ class Pantalla_n3:
 
 #Comando que lo envia a la pantalla
     def siguiente(self):
-        Pantalla_n2.correr(self)
+        ventana_principal.regresar_ventana
 
 #Funcion para ir a la pantalla de derrota
     def ventana_lose(self):
