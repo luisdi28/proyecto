@@ -59,29 +59,29 @@ class Ventana_inicio:
         self.bienvenida=Label(self.canvas,text="Bienvenid@",font=("Times New Roman",15),fg="white",bg="black")
         self.bienvenida.place(x=270,y=75)
         #Label del nombre
-        self.nombre=Label(self.canvas,text="Inserte nombre")
+        self.nombre=Label(self.canvas,text="Inserte nombre",font=("Times New Roman",12),fg="white",bg="black")
         self.nombre.place(x=200,y=150,width=100,height=30)
         #Entrada de nombre
-        self.entrada=Entry(self.canvas)
+        self.entrada=Entry(self.canvas,relief='raised',highlightbackground="black",highlightcolor="black")
         self.entrada.place(x=355,y=150,width=100, height=30)
         #Recibimiento
-        self.recibimiento=Label(self.canvas,text= "La geometria, de una forma nunca antes vista.")
+        self.recibimiento=Label(self.canvas,text= "La geometria, de una forma nunca antes vista.",font=("Times New Roman",14),fg="white",bg="black")
         self.recibimiento.place(x=150,y=225,width=350,height=30)
         #Label para elegir el nivel
         self.nivel=Label(self.canvas,text="Elige el nivel: ",font=("Times New Roman",15),fg="white",bg="black")
         self.nivel.place(x=250,y=300)
         #Se definen los botones de radio para elegir el nivel
-        self.rboton1=Radiobutton(self.canvas,text="Nivel 1",value=1,font=("Times New Roman",10),variable=var)                   
+        self.rboton1=Radiobutton(self.canvas,text="Nivel 1",value=1,font=("Times New Roman",10),variable=var,fg="white",bg="black")                   
         self.rboton1.place(x=175,y=350)
-        self.rboton2=Radiobutton(self.canvas,text="Nivel 2",value=2,font=("Times New Roman",10),variable=var)                   
+        self.rboton2=Radiobutton(self.canvas,text="Nivel 2",value=2,font=("Times New Roman",10),variable=var,fg="white",bg="black")                   
         self.rboton2.place(x=275,y=350)
-        self.rboton3=Radiobutton(self.canvas,text="Nivel 3",value=3,font=("Times New Roman",10),variable=var)                   
+        self.rboton3=Radiobutton(self.canvas,text="Nivel 3",value=3,font=("Times New Roman",10),variable=var,fg="white",bg="black")                   
         self.rboton3.place(x=375,y=350)
         #Boton para empezar el juego.
-        self.botone= Button(self.canvas,text="Empezar", command=self.ir_juego)
+        self.botone= Button(self.canvas,text="Empezar",fg="white",bg="black",command=self.ir_juego)
         self.botone.place(x=265,y=425,width=100,height=30)
         #Se define el boton para ir a la ventana "About"
-        self.botona= Button(self.canvas,text="Pantalla About", command=self.ir_info)
+        self.botona= Button(self.canvas,text="Pantalla About",fg="white",bg="black",command=self.ir_info)
         self.botona.place(x=265,y=475,width=100,height=30)
 
 #Funcion que permite al boton de para ir a la pantalla about funcionar.
@@ -167,9 +167,38 @@ class Pantalla_n1:
         self.puntuacion.place(x=425,y=575,width=65, height=20)
         self.vida=Label(self.canvas,text= "Vidas: " + str(vidanave), font=("Times New Roman",9), fg="snow", bg="grey")
         self.vida.place(x=525,y=575,width=65, height=20)
+        
         #Label con el Nombre
         self.mostrar= Label(self.canvas,text=""+self.nombre, font=("Times New Roman",9), fg="snow", bg="grey")
         self.mostrar.place(x=320,y=575,width=65, height=20)
+
+        #Canvas de ganar
+        self.win=Canvas(width=600, height=600, bg="white", highlightthickness=1, relief="ridge", highlightbackground="grey")
+        self.boton_nivel=Button(self.win,text="Siguiente", command=self.siguiente)
+        self.boton_nivel.place(x=75,y=540)
+
+        #Labels de ganador
+        label1 = Label(self.win, text="Felicidades", font=("Haettenschweiler", 30), bg="snow", fg="green")
+        label1.place(x=150, y=45)
+        label2 = Label(self.win, text="por", font=("Haettenschweiler", 30), bg="snow", fg="green")
+        label2.place(x=170, y=85)
+        label3 = Label(self.win, text="la victoria", font=("Haettenschweiler", 30), bg="snow", fg="green")
+        label3.place(x=200, y=125)
+        label4 = Label(self.win, text="presiona", font=("Haettenschweiler", 30), bg="snow", fg="green")
+        label4.place(x=230, y=165)
+        label5 = Label(self.win, text="el boton para continuar", font=("Haettenschweiler", 30), bg="snow", fg="green")
+        label5.place(x=260, y=205)
+
+        #Canvas de perder
+        self.lose=Canvas(width=600, height=600, bg="black", highlightthickness=1, relief="ridge", highlightbackground="grey")
+        self.button_return=Button(self.lose,text="Regresar",font=("Times New Roman",10),bg="snow",fg="black",command=ventana_principal.regresar_ventana)
+        self.button_return.place(x=15,y=565,width=100,height=30)
+
+        #Labels de perdedor
+        label6 = Label(self.lose, text="Game", font=("Haettenschweiler", 40), bg="black", fg="red")
+        label6.place(x=253,y=50)
+        label7 = Label(self.lose, text="Over", font=("Haettenschweiler", 40), bg="black", fg="red")
+        label7.place(x=259,y=120)
 
         #Cronometro
         self.minuto=Label(self.canvas,text="",font=("Times New Roman",12),fg="black",bg="snow",width=1,height=1)
@@ -186,6 +215,28 @@ class Pantalla_n1:
         #Thread de la animacion
         animacion = Thread(target = self.Animacion, args = (self.trianguloimg,self.circuloimg,self.estrellaimg,self.canvas))
         animacion.start()
+
+        #Funcion para ir a la pantalla de victoria
+    def ventana_win(self):
+        global seg
+        global cerrarthread
+        if seg==59:
+            self.canvas.place_forget()
+            cerrarthread=False
+            return self.win.place(x=0,y=0)
+
+        #Comando que lo envia a la pantalla
+    def siguiente(self):
+        Pantalla_n2.correr(self)
+
+        #Funcion para ir a la pantalla de derrota
+    def ventana_lose(self):
+        global vidanave
+        global cerrarthread
+        if vidanave==0:
+            self.canvas.place_forget()
+            cerrarthread=False
+            return self.lose.place(x=0,y=0)
         
 #Funcion del cronometro
     def tiempo(self):
@@ -200,6 +251,7 @@ class Pantalla_n1:
                 self.minuto.configure(text=mi)
             self.segundo.configure(text=seg)
             self.puntaje()
+            self.ventana_win()
             time.sleep(1)
             return self.tiempo()
 
@@ -311,6 +363,7 @@ class Pantalla_n1:
         else:
             sihaycolision=False
             return False
+        self.ventana_lose()
 
 #Clase pantalla del nivel 1  
 class Pantalla_n2:
