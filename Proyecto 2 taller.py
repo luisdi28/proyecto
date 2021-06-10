@@ -237,6 +237,14 @@ class Pantalla_n1:
             self.canvas.place_forget()
             cerrarthread=False
             return self.lose.place(x=0,y=0)
+
+        #Imagen estrella
+        self.trofeo=cargar_imagen('trofeo.png')
+        self.trofeoimg = self.win.create_image(250,300,image=self.trofeo,ancho=NW)
+
+        #Imagen calabera
+        self.calabera=cargar_imagen('calabera.png')
+        self.calaberaimg = self.lose.create_image(185,300,image=self.calabera,ancho=NW)
         
 #Funcion del cronometro
     def tiempo(self):
@@ -430,6 +438,35 @@ class Pantalla_n2:
         self.mostrar= Label(self.canvas,text=""+self.nombre, font=("Times New Roman",9), fg="snow", bg="grey")
         self.mostrar.place(x=320,y=575,width=65, height=20)
 
+        #Canvas de ganar
+        self.win=Canvas(width=600, height=600, bg="white", highlightthickness=1, relief="ridge", highlightbackground="grey")
+        self.boton_nivel=Button(self.win,text="Siguiente", command=self.siguiente)
+        self.boton_nivel.place(x=75,y=540)
+
+        #Labels de ganador
+        label1 = Label(self.win, text="Felicidades", font=("Haettenschweiler", 30), bg="snow", fg="green")
+        label1.place(x=150, y=45)
+        label2 = Label(self.win, text="por", font=("Haettenschweiler", 30), bg="snow", fg="green")
+        label2.place(x=170, y=85)
+        label3 = Label(self.win, text="la victoria", font=("Haettenschweiler", 30), bg="snow", fg="green")
+        label3.place(x=200, y=125)
+        label4 = Label(self.win, text="presiona", font=("Haettenschweiler", 30), bg="snow", fg="green")
+        label4.place(x=230, y=165)
+        label5 = Label(self.win, text="el boton para continuar", font=("Haettenschweiler", 30), bg="snow", fg="green")
+        label5.place(x=260, y=205)
+
+        #Canvas de perder
+        self.lose=Canvas(width=600, height=600, bg="black", highlightthickness=1, relief="ridge", highlightbackground="grey")
+        self.button_return=Button(self.lose,text="Regresar",font=("Times New Roman",10),bg="snow",fg="black",command=ventana_principal.regresar_ventana)
+        self.button_return.place(x=15,y=565,width=100,height=30)
+
+        #Labels de perdedor
+        label6 = Label(self.lose, text="Game", font=("Haettenschweiler", 40), bg="black", fg="red")
+        label6.place(x=253,y=50)
+        label7 = Label(self.lose, text="Over", font=("Haettenschweiler", 40), bg="black", fg="red")
+        label7.place(x=259,y=120)
+
+
         #Cronometro
         self.minuto=Label(self.canvas,text="",font=("Times New Roman",12),fg="black",bg="snow",width=1,height=1)
         self.minuto.place(x=5,y=3)
@@ -459,9 +496,41 @@ class Pantalla_n2:
                 self.minuto.configure(text=mi)
             self.segundo.configure(text=seg)
             self.puntaje()
+            self.ventana_win()
             time.sleep(1)
             return self.tiempo()
+
+    #Funcion para ir a la pantalla de victoria
+    def ventana_win(self):
+        global seg
+        global cerrarthread
+        if seg==59:
+            self.canvas.place_forget()
+            cerrarthread=False
+            return self.win.place(x=0,y=0)
+
+        #Comando que lo envia a la pantalla
+    def siguiente(self):
+        Pantalla_n2.correr(self)
+
+        #Funcion para ir a la pantalla de derrota
+    def ventana_lose(self):
+        global vidanave
+        global cerrarthread
+        if vidanave==0:
+            self.canvas.place_forget()
+            cerrarthread=False
+            return self.lose.place(x=0,y=0)
+
+        #Imagen estrella
+        self.trofeo=cargar_imagen('trofeo.png')
+        self.trofeoimg = self.win.create_image(250,300,image=self.trofeo,ancho=NW)
+
+        #Imagen calabera
+        self.calabera=cargar_imagen('calabera.png')
+        self.calaberaimg = self.lose.create_image(185,300,image=self.calabera,ancho=NW)
         
+#Fucion que mueve a los enemigos
     def Animacion(self,estrella,circulo,triangulo,rombo,cilindro,canvas):
         global cerrarthread
         if  cerrarthread:
@@ -610,7 +679,8 @@ class Pantalla_n2:
         else:
             sihaycolision=False
             return False
-                
+        self.ventana_lose()
+        
 #Clase pantalla del nivel 1  
 class Pantalla_n3:
     def __init__(self):
@@ -683,6 +753,34 @@ class Pantalla_n3:
         self.mostrar= Label(self.canvas,text=""+self.nombre, font=("Times New Roman",9), fg="snow", bg="grey")
         self.mostrar.place(x=320,y=575,width=65, height=20)
 
+        #Canvas de ganar
+        self.win=Canvas(width=600, height=600, bg="white", highlightthickness=1, relief="ridge", highlightbackground="grey")
+        self.boton_nivel=Button(self.win,text="Siguiente", command=self.siguiente)
+        self.boton_nivel.place(x=75,y=540)
+
+        #Labels de ganador
+        label1 = Label(self.win, text="Felicidades", font=("Haettenschweiler", 30), bg="snow", fg="green")
+        label1.place(x=150, y=45)
+        label2 = Label(self.win, text="por", font=("Haettenschweiler", 30), bg="snow", fg="green")
+        label2.place(x=170, y=85)
+        label3 = Label(self.win, text="la victoria", font=("Haettenschweiler", 30), bg="snow", fg="green")
+        label3.place(x=200, y=125)
+        label4 = Label(self.win, text="presiona", font=("Haettenschweiler", 30), bg="snow", fg="green")
+        label4.place(x=230, y=165)
+        label5 = Label(self.win, text="el boton para continuar", font=("Haettenschweiler", 30), bg="snow", fg="green")
+        label5.place(x=260, y=205)
+
+        #Canvas de perder
+        self.lose=Canvas(width=600, height=600, bg="black", highlightthickness=1, relief="ridge", highlightbackground="grey")
+        self.button_return=Button(self.lose,text="Regresar",font=("Times New Roman",10),bg="snow",fg="black",command=ventana_principal.regresar_ventana)
+        self.button_return.place(x=15,y=565,width=100,height=30)
+
+        #Labels de perdedor
+        label6 = Label(self.lose, text="Game", font=("Haettenschweiler", 40), bg="black", fg="red")
+        label6.place(x=253,y=50)
+        label7 = Label(self.lose, text="Over", font=("Haettenschweiler", 40), bg="black", fg="red")
+        label7.place(x=259,y=120)
+        
         #Cronometro
         self.minuto=Label(self.canvas,text="",font=("Times New Roman",12),fg="black",bg="snow",width=1,height=1)
         self.minuto.place(x=5,y=3)
@@ -712,8 +810,39 @@ class Pantalla_n3:
                 self.minuto.configure(text=mi)
             self.segundo.configure(text=seg)
             self.puntaje()
+            self.ventana_win()
             time.sleep(1)
             return self.tiempo()
+
+#Funcion para ir a la pantalla de victoria
+    def ventana_win(self):
+        global seg
+        global cerrarthread
+        if seg==59:
+            self.canvas.place_forget()
+            cerrarthread=False
+            return self.win.place(x=0,y=0)
+
+#Comando que lo envia a la pantalla
+    def siguiente(self):
+        Pantalla_n2.correr(self)
+
+#Funcion para ir a la pantalla de derrota
+    def ventana_lose(self):
+        global vidanave
+        global cerrarthread
+        if vidanave==0:
+            self.canvas.place_forget()
+            cerrarthread=False
+            return self.lose.place(x=0,y=0)
+
+        #Imagen estrella
+        self.ganador=cargar_imagen('ganador.png')
+        self.ganadorimg = self.win.create_image(250,300,image=self.ganador,ancho=NW)
+
+        #Imagen calabera
+        self.calabera=cargar_imagen('calabera.png')
+        self.calaberaimg = self.lose.create_image(185,300,image=self.calabera,ancho=NW)
 
 #Fucion que mueve a los enemigos
     def Animacion(self,estrella,circulo,triangulo,rombo,cilindro,trapecio,rectangulo,canvas):
@@ -907,6 +1036,7 @@ class Pantalla_n3:
         else:
             sihaycolision=False
             return False
+        self.ventana_lose()
 
 #class Ganadores(self):
     
