@@ -45,6 +45,8 @@ class Ventana_inicio:
         self.Pantalla_n1=Pantalla_n1()
         self.Pantalla_n2=Pantalla_n2()
         self.Pantalla_n3=Pantalla_n3()
+        self.Pantalla_ganadores=Pantalla_ganadores()
+        self.Pantalla_ganadores=Pantalla_ganadores()
 
         #Se define el canvas         
         self.canvas = Canvas(self.master,width=600,height=600,highlightthickness=0,relief='ridge',bg="black")
@@ -83,6 +85,9 @@ class Ventana_inicio:
         #Se define el boton para ir a la ventana "About"
         self.botona= Button(self.canvas,text="Pantalla About",fg="white",bg="black",command=self.ir_info)
         self.botona.place(x=265,y=475,width=100,height=30)
+        #Se define el boton para ir a la ventana "Ganadores"
+        self.botong= Button(self.canvas,text="Pantalla de Ganadores",fg="white",bg="black",command=self.ganadores)
+        self.botong.place(x=253,y=525,width=125,height=30)
 
 #Funcion que permite al boton de para ir a la pantalla about funcionar.
     def ir_info(self):
@@ -95,6 +100,8 @@ class Ventana_inicio:
             self.Pantalla_n2.correr(self.entrada.get(),Pantalla_n3())
         elif self.entrada.get()!="" and var.get()==3:
             self.Pantalla_n3.correr(self.entrada.get())
+    def ganadores(self):
+        self.Pantalla_ganadores.correr()
   
 #Pantalla about 
 class About:
@@ -218,7 +225,7 @@ class Pantalla_n1:
         animacion = Thread(target = self.Animacion, args = (self.trianguloimg,self.circuloimg,self.estrellaimg,self.canvas))
         animacion.start()
 
-        #Funcion para ir a la pantalla de victoria
+#Funcion para ir a la pantalla de victoria
     def ventana_win(self):
         global seg
         global cerrarthread
@@ -227,11 +234,11 @@ class Pantalla_n1:
             self.canvas.place_forget()
             return self.win.place(x=0,y=0)
 
-        #Comando que lo envia a la pantalla
+#Funcion que lo envia al siguiente nivel
     def siguiente(self):
         self.pantalla2.correr(self.nombre,self.pantalla3)
 
-        #Funcion para ir a la pantalla de derrota
+#Funcion para ir a la pantalla de derrota
     def ventana_lose(self):
         global vidanave
         global cerrarthread
@@ -503,7 +510,7 @@ class Pantalla_n2:
             time.sleep(1)
             return self.tiempo()
 
-    #Funcion para ir a la pantalla de victoria
+#Funcion para ir a la pantalla de victoria
     def ventana_win(self):
         global seg
         global cerrarthread
@@ -512,11 +519,11 @@ class Pantalla_n2:
             self.canvas.place_forget()
             return self.win.place(x=0,y=0)
 
-        #Comando que lo envia a la pantalla
+#Funcion que lo envia a la pantalla
     def siguiente(self):
          self.pantalla3.correr(self.nombre)
 
-        #Funcion para ir a la pantalla de derrota
+#Funcion para ir a la pantalla de derrota
     def ventana_lose(self):
         global vidanave
         global cerrarthread
@@ -741,7 +748,6 @@ class Pantalla_n3:
         self.rectangulo=cargar_imagen('rectangulo.png')
         self.rectanguloimg = self.canvas.create_image(randint(0,400),randint(0,400),image=self.rectangulo,ancho=NW)
         
-
         #Boton para retornar a la pantalla inicial
         self.button_return=Button(self.canvas,text="Regresar",font=("Times New Roman",10),bg="snow",fg="black",command=ventana_principal.regresar_ventana)
         self.button_return.place(x=15,y=565,width=100,height=30)
@@ -825,8 +831,7 @@ class Pantalla_n3:
             cerrarthread=False
             self.canvas.place_forget()
             return self.win.place(x=0,y=0)
-
-
+        
 #Funcion para ir a la pantalla de derrota
     def ventana_lose(self):
         global vidanave
@@ -1038,9 +1043,30 @@ class Pantalla_n3:
             return False
         self.ventana_lose()
 
-#class Ganadores(self):
-    
-      
+#class Ganadores:
+
+class Pantalla_ganadores:
+    def __init__(self):
+        
+        pass #permite pasar a la función run para ver todo el contenido de la ventana
+        
+    def correr(self):
+        self.canvas = Canvas(width=600,height=600,highlightthickness=0,relief='ridge',bg="gray25")
+        self.canvas.place(x=0,y=0)
+        #Titulo
+        self.titulo=Label(self.canvas,text="GANADORES",font=("Times New Roman",20),fg="white",bg="black")
+        self.titulo.place(x=215,y=20)
+        #Label con el nombre
+        self.nombres=Label(self.canvas,text="Nombres",font=("Times New Roman",12),fg="white",bg="black")
+        self.nombres.place(x=70,y=100)
+        #Label con el puntaje obtenido
+        self.puntaje=Label(self.canvas,text="Puntaje obtenido",font=("Times New Roman",12),fg="white",bg="black")
+        self.puntaje.place(x=415,y=100,width=125,height=30)
+
+        #Boton para volver a la pantalla de inicio 
+        self.button_return=Button(self.canvas,text="Regresar",font=("Times New Roman",10),bg="snow",fg="black",command=ventana_principal.correr)
+        self.button_return.place(x=255,y=550,width=100,height=30)
+        
 window=Tk()                       
 var=IntVar()
 ventana_principal = Ventana_inicio(window)
