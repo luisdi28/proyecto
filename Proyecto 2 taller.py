@@ -1053,6 +1053,9 @@ class Pantalla_ganadores:
     def correr(self):
         self.canvas = Canvas(width=600,height=600,highlightthickness=0,relief='ridge',bg="gray25")
         self.canvas.place(x=0,y=0)
+        #Imagen de fondo
+        self.fondo=cargar_imagen('ganadores.png')
+        self.fondoimg = self.canvas.create_image(-15,0,image=self.fondo,ancho=NW)
         #Titulo
         self.titulo=Label(self.canvas,text="GANADORES",font=("Times New Roman",20),fg="white",bg="black")
         self.titulo.place(x=215,y=20)
