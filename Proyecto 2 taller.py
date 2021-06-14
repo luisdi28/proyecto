@@ -90,9 +90,9 @@ class Ventana_inicio:
             self.About.correr()
     def ir_juego(self):
         if self.entrada.get()!="" and var.get()==1:
-            self.Pantalla_n1.correr(self.entrada.get())
+            self.Pantalla_n1.correr(self.entrada.get(),Pantalla_n2(),Pantalla_n3())
         elif self.entrada.get()!="" and var.get()==2:
-            self.Pantalla_n2.correr(self.entrada.get())
+            self.Pantalla_n2.correr(self.entrada.get(),Pantalla_n3())
         elif self.entrada.get()!="" and var.get()==3:
             self.Pantalla_n3.correr(self.entrada.get())
   
@@ -121,8 +121,10 @@ class Pantalla_n1:
 
         pass
 
-    def correr(self,nombre):
+    def correr(self,nombre,pantalla2,pantalla3):
         self.nombre=nombre
+        self.pantalla2=pantalla2
+        self.pantalla3=pantalla3
         global vidanave
         vidanave=3
         global puntaje
@@ -220,22 +222,22 @@ class Pantalla_n1:
     def ventana_win(self):
         global seg
         global cerrarthread
-        if seg==3:
-            self.canvas.place_forget()
+        if seg==7:
             cerrarthread=False
+            self.canvas.place_forget()
             return self.win.place(x=0,y=0)
 
         #Comando que lo envia a la pantalla
     def siguiente(self):
-        Pantalla_n2.correr(self,self.nombre)
+        self.pantalla2.correr(self.nombre,self.pantalla3)
 
         #Funcion para ir a la pantalla de derrota
     def ventana_lose(self):
         global vidanave
         global cerrarthread
         if vidanave==0:
-            self.canvas.place_forget()
             cerrarthread=False
+            self.canvas.place_forget()
             return self.lose.place(x=0,y=0)
 
         #Imagen estrella
@@ -379,8 +381,9 @@ class Pantalla_n2:
 
         pass
 
-    def correr(self,nombre):
+    def correr(self,nombre,pantalla3):
         self.nombre=nombre
+        self.pantalla3=pantalla3
         global vidanave
         vidanave=3
         global puntaje
@@ -504,22 +507,22 @@ class Pantalla_n2:
     def ventana_win(self):
         global seg
         global cerrarthread
-        if seg==59:
-            self.canvas.place_forget()
+        if seg==7:
             cerrarthread=False
+            self.canvas.place_forget()
             return self.win.place(x=0,y=0)
 
         #Comando que lo envia a la pantalla
     def siguiente(self):
-        Pantalla_n2.correr(self)
+         self.pantalla3.correr(self.nombre)
 
         #Funcion para ir a la pantalla de derrota
     def ventana_lose(self):
         global vidanave
         global cerrarthread
         if vidanave==0:
-            self.canvas.place_forget()
             cerrarthread=False
+            self.canvas.place_forget()
             return self.lose.place(x=0,y=0)
 
         #Imagen estrella
@@ -755,7 +758,7 @@ class Pantalla_n3:
 
         #Canvas de ganar
         self.win=Canvas(width=600, height=600, bg="white", highlightthickness=1, relief="ridge", highlightbackground="grey")
-        self.boton_nivel=Button(self.win,text="Siguiente", command=self.siguiente)
+        self.boton_nivel=Button(self.win,text="Siguiente",command=ventana_principal.regresar_ventana)
         self.boton_nivel.place(x=75,y=540)
 
         #Labels de ganador
@@ -818,22 +821,19 @@ class Pantalla_n3:
     def ventana_win(self):
         global seg
         global cerrarthread
-        if seg==59:
-            self.canvas.place_forget()
+        if seg==7:
             cerrarthread=False
+            self.canvas.place_forget()
             return self.win.place(x=0,y=0)
 
-#Comando que lo envia a la pantalla
-    def siguiente(self):
-        ventana_principal.regresar_ventana
 
 #Funcion para ir a la pantalla de derrota
     def ventana_lose(self):
         global vidanave
         global cerrarthread
         if vidanave==0:
-            self.canvas.place_forget()
             cerrarthread=False
+            self.canvas.place_forget()
             return self.lose.place(x=0,y=0)
 
         #Imagen estrella
