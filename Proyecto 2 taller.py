@@ -138,6 +138,8 @@ class Pantalla_n1:
         seg=0
         global mi
         mi=0
+        global puntaje
+        puntaje=0
         global cerrarthread
         cerrarthread=True
         
