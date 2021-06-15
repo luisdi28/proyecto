@@ -134,8 +134,6 @@ class Pantalla_n1:
         self.pantalla3=pantalla3
         global vidanave
         vidanave=3
-        global puntaje
-        puntaje=0
         global seg
         seg=0
         global mi
@@ -393,8 +391,6 @@ class Pantalla_n2:
         self.pantalla3=pantalla3
         global vidanave
         vidanave=3
-        global puntaje
-        puntaje=0
         global seg
         seg=0
         global mi
@@ -701,8 +697,6 @@ class Pantalla_n3:
         self.nombre=nombre
         global vidanave
         vidanave=3
-        global puntaje
-        puntaje=0
         global seg
         seg=0
         global mi
@@ -1093,8 +1087,7 @@ class Pantalla_ganadores:
         menores,pivote,mayores = division(lista)
 
         return quicksort(menores) + [pivote] + quicksort(mayores)
-
-        
+   
 window=Tk()                       
 var=IntVar()
 ventana_principal = Ventana_inicio(window)
