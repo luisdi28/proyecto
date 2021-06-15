@@ -1069,6 +1069,31 @@ class Pantalla_ganadores:
         #Boton para volver a la pantalla de inicio 
         self.button_return=Button(self.canvas,text="Regresar",font=("Times New Roman",10),bg="snow",fg="black",command=ventana_principal.correr)
         self.button_return.place(x=255,y=550,width=100,height=30)
+
+#Funcion para obtener los mejores puntajes
+    def division(lista):
+        pivote=lista[0]
+        menores=[]
+        mayores=[]
+
+        for i in range(1,len(lista)):
+
+            if lista[i] < pivote:
+                menores.append(lista[i])
+            else:
+                mayores.append(lista[i])
+            
+        return menores,pivote,mayores
+
+    def quicksort(lista):
+        
+        if len(lista) < 2:
+            return lista
+
+        menores,pivote,mayores = division(lista)
+
+        return quicksort(menores) + [pivote] + quicksort(mayores)
+
         
 window=Tk()                       
 var=IntVar()
