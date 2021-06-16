@@ -4,6 +4,13 @@ import time
 from threading import Thread
 import os
 from PIL import ImageTk,Image
+import vlc
+
+player = vlc.MediaPlayer("play_music/pantalla.mp3")
+player1 = vlc.MediaPlayer("play_music/nivel_1.mp3")
+player2 = vlc.MediaPlayer("play_music/nivel_2.mp3")
+player3 = vlc.MediaPlayer("play_music/nivel_3.mp3")
+player4 = vlc.MediaPlayer("play_music/boom.mp3")
 
 #Globales
 global vidanave
@@ -39,6 +46,7 @@ class Ventana_inicio:
         
     #Funcion para correr lo que se tiene en la ventana    
     def correr(self):
+        player.play()
         global cerrarthread
         cerrarthread=False
         self.About=About()
@@ -93,16 +101,23 @@ class Ventana_inicio:
     def ir_info(self):
         if self.entrada.get()=="":
             self.About.correr()
+            player.play()
+            
     def ir_juego(self):
         if self.entrada.get()!="" and var.get()==1:
             self.Pantalla_n1.correr(self.entrada.get(),Pantalla_n2(),Pantalla_n3())
+            player.stop()
         elif self.entrada.get()!="" and var.get()==2:
             self.Pantalla_n2.correr(self.entrada.get(),Pantalla_n3())
+            player.stop()
         elif self.entrada.get()!="" and var.get()==3:
             self.Pantalla_n3.correr(self.entrada.get())
+            player.stop()
+            
     def ganadores(self):
         self.Pantalla_ganadores.correr()
-  
+        player.play()
+        
 #Pantalla about 
 class About:
     def __init__(self):
@@ -129,17 +144,18 @@ class Pantalla_n1:
         pass
 
     def correr(self,nombre,pantalla2,pantalla3):
+        player1.play()
         self.nombre=nombre
         self.pantalla2=pantalla2
         self.pantalla3=pantalla3
         global vidanave
         vidanave=3
+        global puntaje
+        puntaje=0
         global seg
         seg=0
         global mi
         mi=0
-        global puntaje
-        puntaje=0
         global cerrarthread
         cerrarthread=True
         
@@ -227,9 +243,11 @@ class Pantalla_n1:
 
 #Funcion para ir a la pantalla de victoria
     def ventana_win(self):
+        #player1.stop()
         global seg
         global cerrarthread
         if seg==7:
+            player1.stop()
             cerrarthread=False
             self.canvas.place_forget()
             return self.win.place(x=0,y=0)
@@ -240,9 +258,11 @@ class Pantalla_n1:
 
 #Funcion para ir a la pantalla de derrota
     def ventana_lose(self):
+        #player1.stop()
         global vidanave
         global cerrarthread
         if vidanave==0:
+            player1.stop()
             cerrarthread=False
             self.canvas.place_forget()
             return self.lose.place(x=0,y=0)
@@ -263,6 +283,7 @@ class Pantalla_n1:
         if cerrarthread:
             seg+=1
             if seg==60:
+                player1.stop()
                 seg=0
                 mi+=1
                 self.minuto.configure(text=mi)
@@ -361,18 +382,21 @@ class Pantalla_n1:
         circulocoords=self.canvas.bbox(self.circuloimg)
         if cuadradocoords[0]<=triangulocoords[2] and cuadradocoords[2]>=triangulocoords[0] and cuadradocoords[1]<=triangulocoords[3] and cuadradocoords[3]>=triangulocoords[1]:
             if not sihaycolision:
+                player4.play()
                 sihaycolision=True
                 vidanave=vidanave-1
                 self.vida.config(text="Vidas: " + str(vidanave))
                 return True
         elif cuadradocoords[0]<=estrellacoords[2] and cuadradocoords[2]>=estrellacoords[0] and cuadradocoords[1]<=estrellacoords[3] and cuadradocoords[3]>=estrellacoords[1]:
             if not sihaycolision:
+                player4.play()
                 sihaycolision=True
                 vidanave=vidanave-1
                 self.vida.config(text="Vidas: " + str(vidanave))
                 return True
         elif cuadradocoords[0]<=circulocoords[2] and cuadradocoords[2]>=circulocoords[0] and cuadradocoords[1]<=circulocoords[3] and cuadradocoords[3]>=circulocoords[1]:
             if not sihaycolision:
+                player4.play()
                 sihaycolision=True
                 vidanave=vidanave-1
                 self.vida.config(text="Vidas: " + str(vidanave))
@@ -389,10 +413,13 @@ class Pantalla_n2:
         pass
 
     def correr(self,nombre,pantalla3):
+        player2.play()
         self.nombre=nombre
         self.pantalla3=pantalla3
         global vidanave
         vidanave=3
+        global puntaje
+        puntaje=0
         global seg
         seg=0
         global mi
@@ -513,19 +540,21 @@ class Pantalla_n2:
         global seg
         global cerrarthread
         if seg==7:
+            player2.stop()
             cerrarthread=False
             self.canvas.place_forget()
             return self.win.place(x=0,y=0)
 
 #Funcion que lo envia a la pantalla
     def siguiente(self):
-         self.pantalla3.correr(self.nombre)
+        self.pantalla3.correr(self.nombre)
 
 #Funcion para ir a la pantalla de derrota
     def ventana_lose(self):
         global vidanave
         global cerrarthread
         if vidanave==0:
+            player2.stop()
             cerrarthread=False
             self.canvas.place_forget()
             return self.lose.place(x=0,y=0)
@@ -656,30 +685,35 @@ class Pantalla_n2:
         cilindocoords=self.canvas.bbox(self.cilindroimg)
         if cuadradocoords[0]<=triangulocoords[2] and cuadradocoords[2]>=triangulocoords[0] and cuadradocoords[1]<=triangulocoords[3] and cuadradocoords[3]>=triangulocoords[1]:
             if not sihaycolision:
+                player4.play()
                 sihaycolision=True
                 vidanave=vidanave-1
                 self.vida.config(text="Vidas: " + str(vidanave))
                 return True
         elif cuadradocoords[0]<=estrellacoords[2] and cuadradocoords[2]>=estrellacoords[0] and cuadradocoords[1]<=estrellacoords[3] and cuadradocoords[3]>=estrellacoords[1]:
             if not sihaycolision:
+                player4.play()
                 sihaycolision=True
                 vidanave=vidanave-1
                 self.vida.config(text="Vidas: " + str(vidanave))
                 return True
         elif cuadradocoords[0]<=circulocoords[2] and cuadradocoords[2]>=circulocoords[0] and cuadradocoords[1]<=circulocoords[3] and cuadradocoords[3]>=circulocoords[1]:
             if not sihaycolision:
+                player4.play()
                 sihaycolision=True
                 vidanave=vidanave-1
                 self.vida.config(text="Vidas: " + str(vidanave))
                 return True
         elif cuadradocoords[0]<=rombocoords[2] and cuadradocoords[2]>=rombocoords[0] and cuadradocoords[1]<=rombocoords[3] and cuadradocoords[3]>=rombocoords[1]:
             if not sihaycolision:
+                player4.play()
                 sihaycolision=True
                 vidanave=vidanave-1
                 self.vida.config(text="Vidas: " + str(vidanave))
                 return True
         elif cuadradocoords[0]<=cilindocoords[2] and cuadradocoords[2]>=cilindocoords[0] and cuadradocoords[1]<=cilindocoords[3] and cuadradocoords[3]>=cilindocoords[1]:
             if not sihaycolision:
+                player4.play()
                 sihaycolision=True
                 vidanave=vidanave-1
                 self.vida.config(text="Vidas: " + str(vidanave))
@@ -696,9 +730,12 @@ class Pantalla_n3:
         pass
 
     def correr(self,nombre):
+        player3.play()
         self.nombre=nombre
         global vidanave
         vidanave=3
+        global puntaje
+        puntaje=0
         global seg
         seg=0
         global mi
@@ -824,6 +861,7 @@ class Pantalla_n3:
         global seg
         global cerrarthread
         if seg==7:
+            player3.stop()
             cerrarthread=False
             self.canvas.place_forget()
             return self.win.place(x=0,y=0)
@@ -833,6 +871,7 @@ class Pantalla_n3:
         global vidanave
         global cerrarthread
         if vidanave==0:
+            player3.stop()
             cerrarthread=False
             self.canvas.place_forget()
             return self.lose.place(x=0,y=0)
@@ -994,42 +1033,49 @@ class Pantalla_n3:
         rectangulocoords=self.canvas.bbox(self.rectanguloimg)
         if cuadradocoords[0]<=triangulocoords[2] and cuadradocoords[2]>=triangulocoords[0] and cuadradocoords[1]<=triangulocoords[3] and cuadradocoords[3]>=triangulocoords[1]:
             if not sihaycolision:
+                player4.play()
                 sihaycolision=True
                 vidanave=vidanave-1
                 self.vida.config(text="Vidas: " + str(vidanave))
                 return True
         elif cuadradocoords[0]<=estrellacoords[2] and cuadradocoords[2]>=estrellacoords[0] and cuadradocoords[1]<=estrellacoords[3] and cuadradocoords[3]>=estrellacoords[1]:
             if not sihaycolision:
+                player4.play()
                 sihaycolision=True
                 vidanave=vidanave-1
                 self.vida.config(text="Vidas: " + str(vidanave))
                 return True
         elif cuadradocoords[0]<=circulocoords[2] and cuadradocoords[2]>=circulocoords[0] and cuadradocoords[1]<=circulocoords[3] and cuadradocoords[3]>=circulocoords[1]:
             if not sihaycolision:
+                player4.play()
                 sihaycolision=True
                 vidanave=vidanave-1
                 self.vida.config(text="Vidas: " + str(vidanave))
                 return True
         elif cuadradocoords[0]<=rombocoords[2] and cuadradocoords[2]>=rombocoords[0] and cuadradocoords[1]<=rombocoords[3] and cuadradocoords[3]>=rombocoords[1]:
             if not sihaycolision:
+                player4.play()
                 sihaycolision=True
                 vidanave=vidanave-1
                 self.vida.config(text="Vidas: " + str(vidanave))
                 return True
         elif cuadradocoords[0]<=cilindocoords[2] and cuadradocoords[2]>=cilindocoords[0] and cuadradocoords[1]<=cilindocoords[3] and cuadradocoords[3]>=cilindocoords[1]:
             if not sihaycolision:
+                player4.play()
                 sihaycolision=True
                 vidanave=vidanave-1
                 self.vida.config(text="Vidas: " + str(vidanave))
                 return True
         elif cuadradocoords[0]<=trapeciocoords[2] and cuadradocoords[2]>=trapeciocoords[0] and cuadradocoords[1]<=trapeciocoords[3] and cuadradocoords[3]>=trapeciocoords[1]:
             if not sihaycolision:
+                player4.play()
                 sihaycolision=True
                 vidanave=vidanave-1
                 self.vida.config(text="Vidas: " + str(vidanave))
                 return True
         elif cuadradocoords[0]<=rectangulocoords[2] and cuadradocoords[2]>=rectangulocoords[0] and cuadradocoords[1]<=rectangulocoords[3] and cuadradocoords[3]>=rectangulocoords[1]:
             if not sihaycolision:
+                player4.play()
                 sihaycolision=True
                 vidanave=vidanave-1
                 self.vida.config(text="Vidas: " + str(vidanave))
@@ -1056,40 +1102,13 @@ class Pantalla_ganadores:
         self.titulo=Label(self.canvas,text="GANADORES",font=("Times New Roman",20),fg="white",bg="black")
         self.titulo.place(x=215,y=20)
         #Label con el nombre
-        self.nombres=Label(self.canvas,text="Nombres",font=("Times New Roman",12),fg="white",bg="black")
-        self.nombres.place(x=70,y=100)
-        #Label con el puntaje obtenido
-        self.puntaje=Label(self.canvas,text="Puntaje obtenido",font=("Times New Roman",12),fg="white",bg="black")
-        self.puntaje.place(x=415,y=100,width=125,height=30)
-
+        self.nombres=Label(self.canvas,text="Mejores 7 puntajes",font=("Times New Roman",15),fg="white",bg="black")
+        self.nombres.place(x=220,y=100)
+        
         #Boton para volver a la pantalla de inicio 
         self.button_return=Button(self.canvas,text="Regresar",font=("Times New Roman",10),bg="snow",fg="black",command=ventana_principal.correr)
         self.button_return.place(x=255,y=550,width=100,height=30)
-
-#Funcion para obtener los mejores puntajes
-    def division(lista):
-        pivote=lista[0]
-        menores=[]
-        mayores=[]
-
-        for i in range(1,len(lista)):
-
-            if lista[i] < pivote:
-                menores.append(lista[i])
-            else:
-                mayores.append(lista[i])
-            
-        return menores,pivote,mayores
-
-    def quicksort(lista):
         
-        if len(lista) < 2:
-            return lista
-
-        menores,pivote,mayores = division(lista)
-
-        return quicksort(menores) + [pivote] + quicksort(mayores)
-   
 window=Tk()                       
 var=IntVar()
 ventana_principal = Ventana_inicio(window)
@@ -1098,4 +1117,3 @@ window.minsize(600,600)
 ventana_principal.correr()
 window.resizable(False,False)
 window.mainloop()
-
