@@ -13,6 +13,8 @@ player3 = vlc.MediaPlayer("play_music/nivel_3.mp3")
 player4 = vlc.MediaPlayer("play_music/boom.mp3")
 
 #Globales
+global reset
+reset=False
 global vidanave
 vidanave=3
 global puntaje
@@ -28,6 +30,50 @@ cerrarthread=False
 global sihaycolision
 sihaycolision=False
 
+#Funcion para obtener los mejores puntajes
+
+def division(lista):
+    #lista=list(map(int,lista))
+    pivote=lista[0]
+    menores=[]
+    mayores=[]
+
+    for i in range(1,len(lista)):
+        var=lista[i].split("-")
+        var2=pivote.split("-")
+        if int(var[1]) < int(var2[1]):
+            menores.append(lista[i])
+        else:
+            mayores.append(lista[i])
+            
+    return menores,pivote,mayores
+
+def quicksort(lista):
+    
+    if len(lista) < 2:
+        
+        return lista
+    
+    mayores,pivote,menores = division(lista)
+
+    return quicksort(menores) + [pivote] + quicksort(mayores)
+
+
+#Función para leer el .txt
+def read():
+        try:
+            archivo = open ("Puntuacion.txt","r")
+            return (archivo.readlines())
+        finally:
+            archivo.close()
+
+#Función para escribir en el archivo txt
+def archivo(texto):
+    archivo = open ("Puntuacion.txt","a")
+    archivo.write(texto)
+    archivo.close()
+
+#Función para cargar imagen
 def cargar_imagen(nombre):
     ruta=os.path.join('photos',nombre)
     imagen=PhotoImage(file=ruta)
@@ -42,6 +88,8 @@ class Ventana_inicio:
     def regresar_ventana(self):
         global cerrarthread
         cerrarthread=True
+        global reset
+        reset=False
         ventana_principal.correr()
         
     #Funcion para correr lo que se tiene en la ventana    
@@ -240,13 +288,20 @@ class Pantalla_n1:
         #Thread de la animacion
         animacion = Thread(target = self.Animacion, args = (self.trianguloimg,self.circuloimg,self.estrellaimg,self.canvas))
         animacion.start()
+        
+#Función para guardar los puntajes
+    def prueba(self):
+        global vidanave
+        global seg
+        if vidanave<=0:
+            textop=str(self.nombre) + "-" + str(puntaje)+"\n"
+            archivo(textop)
 
 #Funcion para ir a la pantalla de victoria
     def ventana_win(self):
-        #player1.stop()
         global seg
         global cerrarthread
-        if seg==7:
+        if seg==20:
             player1.stop()
             cerrarthread=False
             self.canvas.place_forget()
@@ -254,6 +309,8 @@ class Pantalla_n1:
 
 #Funcion que lo envia al siguiente nivel
     def siguiente(self):
+        global reset
+        reset=True
         self.pantalla2.correr(self.nombre,self.pantalla3)
 
 #Funcion para ir a la pantalla de derrota
@@ -290,6 +347,7 @@ class Pantalla_n1:
             self.segundo.configure(text=seg)
             self.puntaje()
             self.ventana_win()
+            self.prueba()
             time.sleep(1)
             return self.tiempo()
 
@@ -405,6 +463,7 @@ class Pantalla_n1:
             sihaycolision=False
             return False
         self.ventana_lose()
+        self.prueba()
 
 #Clase pantalla del nivel 1  
 class Pantalla_n2:
@@ -426,6 +485,7 @@ class Pantalla_n2:
         mi=0
         global cerrarthread
         cerrarthread=True
+        self.reset_puntajes()
         
         self.canvas=Canvas(width=600, height=600, bg="snow", highlightthickness=1, relief="ridge", highlightbackground="grey")
         self.canvas.place(x=0,y=0)
@@ -518,6 +578,25 @@ class Pantalla_n2:
         animacion = Thread(target = self.Animacion, args = (self.trianguloimg,self.circuloimg,self.estrellaimg,self.romboimg,self.cilindroimg,self.canvas))
         animacion.start()
 
+#Funcion que resetea los puntajes cuando se ingresa a un nivel especifico
+    def reset_puntajes(self):
+        global puntaje
+        global reset
+        if reset==False:
+            puntaje=0
+            return True
+        else:
+            reset=True
+            return False
+        
+#Funcion que guarda los puntajes y el nombre
+    def prueba(self):
+        global vidanave
+        global seg
+        if vidanave<=0:
+            textop=str(self.nombre) + "-" + str(puntaje)+"\n"
+            archivo(textop)
+
 #Funcion del cronometro
     def tiempo(self):
         global seg
@@ -532,6 +611,7 @@ class Pantalla_n2:
             self.segundo.configure(text=seg)
             self.puntaje()
             self.ventana_win()
+            self.prueba()
             time.sleep(1)
             return self.tiempo()
 
@@ -539,7 +619,7 @@ class Pantalla_n2:
     def ventana_win(self):
         global seg
         global cerrarthread
-        if seg==7:
+        if seg==20:
             player2.stop()
             cerrarthread=False
             self.canvas.place_forget()
@@ -547,6 +627,8 @@ class Pantalla_n2:
 
 #Funcion que lo envia a la pantalla
     def siguiente(self):
+        global reset
+        reset=True
         self.pantalla3.correr(self.nombre)
 
 #Funcion para ir a la pantalla de derrota
@@ -722,6 +804,7 @@ class Pantalla_n2:
             sihaycolision=False
             return False
         self.ventana_lose()
+        self.prueba()
         
 #Clase pantalla del nivel 1  
 class Pantalla_n3:
@@ -742,6 +825,7 @@ class Pantalla_n3:
         mi=0
         global cerrarthread
         cerrarthread=True
+        self.reset_puntajes()
         
         self.canvas=Canvas(width=600, height=600, bg="snow", highlightthickness=1, relief="ridge", highlightbackground="grey")
         self.canvas.place(x=0,y=0)
@@ -838,6 +922,25 @@ class Pantalla_n3:
         #Thread de la animacion
         animacion = Thread(target = self.Animacion, args = (self.trianguloimg,self.circuloimg,self.estrellaimg,self.romboimg,self.cilindroimg,self.trapecioimg,self.rectanguloimg,self.canvas))
         animacion.start()
+        
+#Funcion que resetea los puntajes cuando se ingresa a un nivel especifico
+    def reset_puntajes(self):
+        global puntaje
+        global reset
+        if reset==False:
+            puntaje=0
+            return True
+        else:
+            reset=True
+            return False
+        
+#Funcion que guarda el puntaje
+    def prueba(self):
+        global vidanave
+        global seg
+        if seg==10 or vidanave<=0:
+            textop=str(self.nombre) + "-" + str(puntaje)+"\n"
+            archivo(textop)
 
 #Funcion del cronometro
     def tiempo(self):
@@ -853,6 +956,7 @@ class Pantalla_n3:
             self.segundo.configure(text=seg)
             self.puntaje()
             self.ventana_win()
+            self.prueba()
             time.sleep(1)
             return self.tiempo()
 
@@ -1084,6 +1188,7 @@ class Pantalla_n3:
             sihaycolision=False
             return False
         self.ventana_lose()
+        self.prueba()
 
 #class Ganadores:
 
@@ -1095,19 +1200,52 @@ class Pantalla_ganadores:
     def correr(self):
         self.canvas = Canvas(width=600,height=600,highlightthickness=0,relief='ridge',bg="gray25")
         self.canvas.place(x=0,y=0)
+        
         #Imagen de fondo
         self.fondo=cargar_imagen('ganadores.png')
         self.fondoimg = self.canvas.create_image(-15,0,image=self.fondo,ancho=NW)
+        
         #Titulo
         self.titulo=Label(self.canvas,text="GANADORES",font=("Times New Roman",20),fg="white",bg="black")
         self.titulo.place(x=215,y=20)
+        
         #Label con el nombre
         self.nombres=Label(self.canvas,text="Mejores 7 puntajes",font=("Times New Roman",15),fg="white",bg="black")
-        self.nombres.place(x=220,y=100)
+        self.nombres.place(x=220,y=90)
         
         #Boton para volver a la pantalla de inicio 
         self.button_return=Button(self.canvas,text="Regresar",font=("Times New Roman",10),bg="snow",fg="black",command=ventana_principal.correr)
         self.button_return.place(x=255,y=550,width=100,height=30)
+
+        x=quicksort(read())
+
+        #Primer lugar
+        self.primero=Label(self.canvas,text=""+str(x[0]),font=("Times New Roman",12),fg="white",bg="black")
+        self.primero.place(x=250,y=130)
+
+        #Segundo lugar
+        self.segundo=Label(self.canvas,text=""+str(x[1]),font=("Times New Roman",12),fg="white",bg="black")
+        self.segundo.place(x=250,y=180)
+
+        #Tercer lugar
+        self.tercero=Label(self.canvas,text=""+str(x[2]),font=("Times New Roman",12),fg="white",bg="black")
+        self.tercero.place(x=250,y=230)
+
+        #Cuarto lugar
+        self.cuarto=Label(self.canvas,text=""+str(x[3]),font=("Times New Roman",12),fg="white",bg="black")
+        self.cuarto.place(x=250,y=280)
+
+        #Quinto lugar
+        self.quinto=Label(self.canvas,text=""+str(x[4]),font=("Times New Roman",12),fg="white",bg="black")
+        self.quinto.place(x=250,y=330)
+
+        #Sexto lugar
+        self.sexto=Label(self.canvas,text=""+str(x[5]),font=("Times New Roman",12),fg="white",bg="black")
+        self.sexto.place(x=250,y=380)
+
+        #Septimo lugar
+        self.septimo=Label(self.canvas,text=""+str(x[6]),font=("Times New Roman",12),fg="white",bg="black")
+        self.septimo.place(x=250,y=430)
         
 window=Tk()                       
 var=IntVar()
