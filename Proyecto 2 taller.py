@@ -91,6 +91,9 @@ class Ventana_inicio:
         global reset
         reset=False
         ventana_principal.correr()
+        player1.stop()
+        player2.stop()
+        player3.stop()
         
     #Funcion para correr lo que se tiene en la ventana    
     def correr(self):
@@ -1255,3 +1258,8 @@ window.minsize(600,600)
 ventana_principal.correr()
 window.resizable(False,False)
 window.mainloop()
+player.stop()
+player1.stop()
+player2.stop()
+player3.stop()
+player4.stop()
