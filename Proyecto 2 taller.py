@@ -1,3 +1,4 @@
+#Se realizan los imports necesarios para el buen funcionamiento del juegos
 from tkinter import *
 from random import *
 import time
@@ -30,8 +31,32 @@ cerrarthread=False
 global sihaycolision
 sihaycolision=False
 
-#Funcion para obtener los mejores puntajes
+#Compara los puntajes
+def comparar(lista):
+    result=[]
+    for i in range(1,len(lista)):
+        var=lista[i].split("-")
+        result+=var
+    return int(result[13])
 
+#Hace un split para poder localizar los nombres solos
+def dividir(lista):
+    result=[]
+    for i in range(len(lista)):
+        var=lista[i].split("-")
+        result+=var
+    return result
+    
+        
+#Busca un nombre
+def buscar(lista,string):
+    result=0
+    for i in range(len(lista)):
+        if lista[i]==string:
+            result+=i
+    return result
+
+#Funcion para obtener los mejores puntajes
 def division(lista):
     #lista=list(map(int,lista))
     pivote=lista[0]
@@ -276,6 +301,15 @@ class Pantalla_n1:
         label7 = Label(self.lose, text="Over", font=("Haettenschweiler", 40), bg="black", fg="red")
         label7.place(x=259,y=120)
 
+        #Canvas de mejor puntaje
+        self.mejor_puntaje=Canvas(width=200, height=200, bg="goldenrod", highlightthickness=1, relief="ridge", highlightbackground="grey")
+
+        #Label del canvas de mejores puntajes
+        felicitaciones=Label(self.mejor_puntaje, text="Estas entre los mejores puntajes",font=("Haettenschweiler", 10), bg="goldenrod", fg="white")
+        felicitaciones.place(x=40,y=20)
+        self.posicion=Label(self.mejor_puntaje, text="Posicion: ",font=("Haettenschweiler", 10), bg="goldenrod", fg="white")
+        self.posicion.place(x=40, y=40)
+
         #Cronometro
         self.minuto=Label(self.canvas,text="",font=("Times New Roman",12),fg="black",bg="snow",width=1,height=1)
         self.minuto.place(x=5,y=3)
@@ -296,7 +330,7 @@ class Pantalla_n1:
     def prueba(self):
         global vidanave
         global seg
-        if vidanave<=0:
+        if seg==59 or vidanave<=0:
             textop=str(self.nombre) + "-" + str(puntaje)+"\n"
             archivo(textop)
 
@@ -304,7 +338,7 @@ class Pantalla_n1:
     def ventana_win(self):
         global seg
         global cerrarthread
-        if seg==20:
+        if seg==59:
             player1.stop()
             cerrarthread=False
             self.canvas.place_forget()
@@ -318,10 +352,9 @@ class Pantalla_n1:
 
 #Funcion para ir a la pantalla de derrota
     def ventana_lose(self):
-        #player1.stop()
         global vidanave
         global cerrarthread
-        if vidanave==0:
+        if vidanave<=0:
             player1.stop()
             cerrarthread=False
             self.canvas.place_forget()
@@ -334,6 +367,21 @@ class Pantalla_n1:
         #Imagen calabera
         self.calabera=cargar_imagen('calabera.png')
         self.calaberaimg = self.lose.create_image(185,300,image=self.calabera,ancho=NW)
+
+#Funcion que envia un mensaje si se supera una mejor puntuación        
+    def mensaje(self):
+        global puntaje
+        global seg
+        global cerrarthread
+        global vidanave
+        puntajes=quicksort(read())
+        if seg==59 or vidanave<=0:
+            if puntaje>comparar(puntajes):
+                position=(buscar(dividir(puntajes),str(self.nombre)))//2+1
+                self.posicion.config(text="Posicion: " + str(position))
+                cerrarthread=False
+                self.canvas.place_forget()
+                return self.mejor_puntaje.place(x=0,y=0)    
         
 #Funcion del cronometro
     def tiempo(self):
@@ -342,7 +390,7 @@ class Pantalla_n1:
         global cerrarthread
         if cerrarthread:
             seg+=1
-            if seg==60:
+            if seg==59:
                 player1.stop()
                 seg=0
                 mi+=1
@@ -351,10 +399,11 @@ class Pantalla_n1:
             self.puntaje()
             self.ventana_win()
             self.prueba()
+            self.mensaje()
             time.sleep(1)
             return self.tiempo()
 
-#Fuvion que mueve al enemigo
+#Funcion que mueve al enemigo
     def Animacion(self,estrella,circulo,triangulo,canvas):
         global cerrarthread
         if  cerrarthread:
@@ -421,16 +470,16 @@ class Pantalla_n1:
     def mover_cuadrado(self,event):
         x,y=self.canvas.coords(self.cuadradoimg)
         if event.char=="s":
-            if y+10<640-80:
+            if y+15<640-80:
                 self.canvas.coords(self.cuadradoimg,x,y+10)
         elif event.char=="w":
-            if y-10>0:
+            if y-15>0:
                 self.canvas.coords(self.cuadradoimg,x,y-10)
         elif event.char=="d":
-            if x+10<630-70:
+            if x+15<630-70:
                 self.canvas.coords(self.cuadradoimg,x+10,y)
         elif event.char=="a":
-            if x-10>0:
+            if x-15>0:
                 self.canvas.coords(self.cuadradoimg,x-10,y)
                 
 #Funcion que hace que el jugador pierda vidas.
@@ -467,8 +516,9 @@ class Pantalla_n1:
             return False
         self.ventana_lose()
         self.prueba()
+        self.mensaje()
 
-#Clase pantalla del nivel 1  
+#Clase pantalla del nivel 2  
 class Pantalla_n2:
     def __init__(self):
 
@@ -553,6 +603,15 @@ class Pantalla_n2:
         label5 = Label(self.win, text="el boton para continuar", font=("Haettenschweiler", 30), bg="snow", fg="green")
         label5.place(x=260, y=205)
 
+        #Canvas de mejor puntaje
+        self.mejor_puntaje=Canvas(width=200, height=200, bg="goldenrod", highlightthickness=1, relief="ridge", highlightbackground="grey")
+
+        #Label del canvas de mejores puntajes y posicion
+        felicitaciones=Label(self.mejor_puntaje, text="Estas entre los mejores puntajes",font=("Haettenschweiler", 10), bg="goldenrod", fg="white")
+        felicitaciones.place(x=40,y=20)
+        self.posicion=Label(self.mejor_puntaje, text="Posicion: ",font=("Haettenschweiler", 10), bg="goldenrod", fg="white")
+        self.posicion.place(x=40, y=40)
+
         #Canvas de perder
         self.lose=Canvas(width=600, height=600, bg="black", highlightthickness=1, relief="ridge", highlightbackground="grey")
         self.button_return=Button(self.lose,text="Regresar",font=("Times New Roman",10),bg="snow",fg="black",command=ventana_principal.regresar_ventana)
@@ -563,7 +622,6 @@ class Pantalla_n2:
         label6.place(x=253,y=50)
         label7 = Label(self.lose, text="Over", font=("Haettenschweiler", 40), bg="black", fg="red")
         label7.place(x=259,y=120)
-
 
         #Cronometro
         self.minuto=Label(self.canvas,text="",font=("Times New Roman",12),fg="black",bg="snow",width=1,height=1)
@@ -596,7 +654,7 @@ class Pantalla_n2:
     def prueba(self):
         global vidanave
         global seg
-        if vidanave<=0:
+        if seg==59 or vidanave<=0:
             textop=str(self.nombre) + "-" + str(puntaje)+"\n"
             archivo(textop)
 
@@ -607,7 +665,7 @@ class Pantalla_n2:
         global cerrarthread
         if cerrarthread:
             seg+=1
-            if seg==60:
+            if seg==59:
                 seg=0
                 mi+=1
                 self.minuto.configure(text=mi)
@@ -615,6 +673,7 @@ class Pantalla_n2:
             self.puntaje()
             self.ventana_win()
             self.prueba()
+            self.mensaje()
             time.sleep(1)
             return self.tiempo()
 
@@ -622,7 +681,7 @@ class Pantalla_n2:
     def ventana_win(self):
         global seg
         global cerrarthread
-        if seg==20:
+        if seg==59:
             player2.stop()
             cerrarthread=False
             self.canvas.place_forget()
@@ -638,11 +697,26 @@ class Pantalla_n2:
     def ventana_lose(self):
         global vidanave
         global cerrarthread
-        if vidanave==0:
+        if vidanave<=0:
             player2.stop()
             cerrarthread=False
             self.canvas.place_forget()
             return self.lose.place(x=0,y=0)
+        
+#Funcion que envia un mensaje cuando se supera uno de los mejores puntajes
+    def mensaje(self):
+        global puntaje
+        global seg
+        global cerrarthread
+        global vidanave
+        puntajes=quicksort(read())
+        if seg==59 or vidanave<=0:
+            if puntaje>comparar(puntajes):
+                position=(buscar(dividir(puntajes),str(self.nombre)))//2+1
+                self.posicion.config(text="Posicion: " + str(position))
+                cerrarthread=False
+                self.canvas.place_forget()
+                return self.mejor_puntaje.place(x=0,y=0)
 
         #Imagen estrella
         self.trofeo=cargar_imagen('trofeo.png')
@@ -746,16 +820,16 @@ class Pantalla_n2:
     def mover_cuadrado(self,event):
         x,y=self.canvas.coords(self.cuadradoimg)
         if event.char=="s":
-            if y+10<640-80:
+            if y+15<640-80:
                 self.canvas.coords(self.cuadradoimg,x,y+10)
         elif event.char=="w":
-            if y-10>0:
+            if y-15>0:
                 self.canvas.coords(self.cuadradoimg,x,y-10)
         elif event.char=="d":
-            if x+10<630-70:
+            if x+15<630-70:
                 self.canvas.coords(self.cuadradoimg,x+10,y)
         elif event.char=="a":
-            if x-10>0:
+            if x-15>0:
                 self.canvas.coords(self.cuadradoimg,x-10,y)
 
 #Funcion que hace que el jugador pierda vidas.
@@ -808,6 +882,7 @@ class Pantalla_n2:
             return False
         self.ventana_lose()
         self.prueba()
+        self.mensaje()
         
 #Clase pantalla del nivel 1  
 class Pantalla_n3:
@@ -909,6 +984,16 @@ class Pantalla_n3:
         label6.place(x=253,y=50)
         label7 = Label(self.lose, text="Over", font=("Haettenschweiler", 40), bg="black", fg="red")
         label7.place(x=259,y=120)
+
+        #Canvas de mejor puntaje
+        self.mejor_puntaje=Canvas(width=200, height=200, bg="goldenrod", highlightthickness=1, relief="ridge", highlightbackground="grey")
+
+        #Label del canvas de mejores puntajes
+        felicitaciones=Label(self.mejor_puntaje, text="Estas entre los mejores puntajes",font=("Haettenschweiler", 10), bg="goldenrod", fg="white")
+        felicitaciones.place(x=40,y=20)
+
+        self.posicion=Label(self.mejor_puntaje, text="Posicion: ",font=("Haettenschweiler", 10), bg="goldenrod", fg="white")
+        self.posicion.place(x=40, y=40)
         
         #Cronometro
         self.minuto=Label(self.canvas,text="",font=("Times New Roman",12),fg="black",bg="snow",width=1,height=1)
@@ -941,7 +1026,7 @@ class Pantalla_n3:
     def prueba(self):
         global vidanave
         global seg
-        if seg==10 or vidanave<=0:
+        if seg==59 or vidanave<=0:
             textop=str(self.nombre) + "-" + str(puntaje)+"\n"
             archivo(textop)
 
@@ -952,7 +1037,7 @@ class Pantalla_n3:
         global cerrarthread
         if cerrarthread:
             seg+=1
-            if seg==60:
+            if seg==59:
                 seg=0
                 mi+=1
                 self.minuto.configure(text=mi)
@@ -960,6 +1045,7 @@ class Pantalla_n3:
             self.puntaje()
             self.ventana_win()
             self.prueba()
+            self.mensaje()
             time.sleep(1)
             return self.tiempo()
 
@@ -967,7 +1053,7 @@ class Pantalla_n3:
     def ventana_win(self):
         global seg
         global cerrarthread
-        if seg==7:
+        if seg==59:
             player3.stop()
             cerrarthread=False
             self.canvas.place_forget()
@@ -977,11 +1063,26 @@ class Pantalla_n3:
     def ventana_lose(self):
         global vidanave
         global cerrarthread
-        if vidanave==0:
+        if vidanave<=0:
             player3.stop()
             cerrarthread=False
             self.canvas.place_forget()
             return self.lose.place(x=0,y=0)
+
+#Funcion que notifica al jugador si supero uno de los mejores puntajes
+    def mensaje(self):
+        global puntaje
+        global seg
+        global cerrarthread
+        global vidanave
+        puntajes=quicksort(read())
+        if seg==59 or vidanave<=0:
+            if puntaje>comparar(puntajes):
+                position=(buscar(dividir(puntajes),str(self.nombre)))//2+1
+                self.posicion.config(text="Posicion: " + str(position))
+                cerrarthread=False
+                self.canvas.place_forget()
+                return self.mejor_puntaje.place(x=0,y=0)
 
         #Imagen estrella
         self.ganador=cargar_imagen('ganador.png')
@@ -1114,16 +1215,16 @@ class Pantalla_n3:
     def mover_cuadrado(self,event):
         x,y=self.canvas.coords(self.cuadradoimg)
         if event.char=="s":
-            if y+10<640-80:
+            if y+15<640-80:
                 self.canvas.coords(self.cuadradoimg,x,y+10)
         elif event.char=="w":
-            if y-10>0:
+            if y-15>0:
                 self.canvas.coords(self.cuadradoimg,x,y-10)
         elif event.char=="d":
-            if x+10<630-70:
+            if x+15<630-70:
                 self.canvas.coords(self.cuadradoimg,x+10,y)
         elif event.char=="a":
-            if x-10>0:
+            if x-15>0:
                 self.canvas.coords(self.cuadradoimg,x-10,y)
 
 #Funcion que hace que el jugador pierda vidas.                
@@ -1192,6 +1293,7 @@ class Pantalla_n3:
             return False
         self.ventana_lose()
         self.prueba()
+        self.mensaje()
 
 #class Ganadores:
 
@@ -1222,34 +1324,35 @@ class Pantalla_ganadores:
 
         x=quicksort(read())
 
-        #Primer lugar
+        #Label primer lugar
         self.primero=Label(self.canvas,text=""+str(x[0]),font=("Times New Roman",12),fg="white",bg="black")
         self.primero.place(x=250,y=130)
 
-        #Segundo lugar
+        #Label segundo lugar
         self.segundo=Label(self.canvas,text=""+str(x[1]),font=("Times New Roman",12),fg="white",bg="black")
         self.segundo.place(x=250,y=180)
 
-        #Tercer lugar
+        #Label tercer lugar
         self.tercero=Label(self.canvas,text=""+str(x[2]),font=("Times New Roman",12),fg="white",bg="black")
         self.tercero.place(x=250,y=230)
 
-        #Cuarto lugar
+        #Label cuarto lugar
         self.cuarto=Label(self.canvas,text=""+str(x[3]),font=("Times New Roman",12),fg="white",bg="black")
         self.cuarto.place(x=250,y=280)
 
-        #Quinto lugar
+        #Label quinto lugar
         self.quinto=Label(self.canvas,text=""+str(x[4]),font=("Times New Roman",12),fg="white",bg="black")
         self.quinto.place(x=250,y=330)
 
-        #Sexto lugar
+        #Label sexto lugar
         self.sexto=Label(self.canvas,text=""+str(x[5]),font=("Times New Roman",12),fg="white",bg="black")
         self.sexto.place(x=250,y=380)
 
-        #Septimo lugar
+        #Label septimo lugar
         self.septimo=Label(self.canvas,text=""+str(x[6]),font=("Times New Roman",12),fg="white",bg="black")
         self.septimo.place(x=250,y=430)
-        
+
+#Se define la ventana de tkinter, entre otras cosas importantes        
 window=Tk()                       
 var=IntVar()
 ventana_principal = Ventana_inicio(window)
