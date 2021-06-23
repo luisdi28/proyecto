@@ -39,7 +39,7 @@ def comparar(lista):
         result+=var
     return int(result[13])
 
-#Hace un split para poder localizar los nombres solos
+#Hace un split para poder localizar los nombres
 def dividir(lista):
     result=[]
     for i in range(len(lista)):
@@ -56,7 +56,7 @@ def buscar(lista,string):
             result+=i
     return result
 
-#Funcion para obtener los mejores puntajes
+#Funcion de ordenamiento Quicksort
 def division(lista):
     #lista=list(map(int,lista))
     pivote=lista[0]
@@ -173,12 +173,13 @@ class Ventana_inicio:
         self.botong= Button(self.canvas,text="Pantalla de Ganadores",fg="white",bg="black",command=self.ganadores)
         self.botong.place(x=253,y=525,width=125,height=30)
 
-#Funcion que permite al boton de para ir a la pantalla about funcionar.
+#Funcion que permite al boton ir a la pantalla about.
     def ir_info(self):
         if self.entrada.get()=="":
             self.About.correr()
             player.play()
             
+#Función que permite ir a la ventana de cada nivel            
     def ir_juego(self):
         if self.entrada.get()!="" and var.get()==1:
             self.Pantalla_n1.correr(self.entrada.get(),Pantalla_n2(),Pantalla_n3())
@@ -190,11 +191,12 @@ class Ventana_inicio:
             self.Pantalla_n3.correr(self.entrada.get())
             player.stop()
             
+#Función para ir a la ventana donde se muestra los mejores puntajes            
     def ganadores(self):
         self.Pantalla_ganadores.correr()
         player.play()
         
-#Pantalla about 
+#Clase de la pantalla about 
 class About:
     def __init__(self):
         
@@ -213,11 +215,11 @@ class About:
         self.button_return=Button(self.canvas,text="Regresar",font=("Times New Roman",10),bg="snow",fg="black",command=ventana_principal.correr)
         self.button_return.place(x=255,y=465,width=100,height=30)
 
-#Clase pantalla del nivel 1  
+#Clase de la pantalla del nivel 1  
 class Pantalla_n1:
     def __init__(self):
 
-        pass
+        pass #permite pasar a la función run para ver todo el contenido de la ventana
 
     def correr(self,nombre,pantalla2,pantalla3):
         player1.play()
@@ -234,7 +236,8 @@ class Pantalla_n1:
         mi=0
         global cerrarthread
         cerrarthread=True
-        
+
+        #Se define el tamaño y ancho del canvas
         WIDTH, HEIGHT = 600, 600
         self.canvas=Canvas(width=WIDTH, height=HEIGHT, bg="snow", highlightthickness=1, relief="ridge", highlightbackground="grey")
         self.canvas.place(x=0,y=0)
@@ -246,7 +249,7 @@ class Pantalla_n1:
         self.fondo=cargar_imagen('fondo1.png')
         self.fondoimg = self.canvas.create_image(0,0,image=self.fondo,ancho=NW)
         
-        #Se carga la imagen de la figura que usara el jugador y el enemigo
+        #Se carga las imagenes de la figuras que usara el jugador y los proyectiles
         self.cuadrado=cargar_imagen('cuadrado.png')
         self.cuadradoimg = self.canvas.create_image(300,540,image=self.cuadrado,ancho=NW)
 
@@ -330,7 +333,7 @@ class Pantalla_n1:
     def prueba(self):
         global vidanave
         global seg
-        if seg==59 or vidanave<=0:
+        if seg==15 or vidanave<=0:
             textop=str(self.nombre) + "-" + str(puntaje)+"\n"
             archivo(textop)
 
@@ -338,7 +341,7 @@ class Pantalla_n1:
     def ventana_win(self):
         global seg
         global cerrarthread
-        if seg==59:
+        if seg==15:
             player1.stop()
             cerrarthread=False
             self.canvas.place_forget()
@@ -375,7 +378,7 @@ class Pantalla_n1:
         global cerrarthread
         global vidanave
         puntajes=quicksort(read())
-        if seg==59 or vidanave<=0:
+        if seg==15 or vidanave<=0:
             if puntaje>comparar(puntajes):
                 position=(buscar(dividir(puntajes),str(self.nombre)))//2+1
                 self.posicion.config(text="Posicion: " + str(position))
@@ -458,7 +461,7 @@ class Pantalla_n1:
                     self.canvas.move(estrella,o,p)
                     self.colision()
             
-#Funcion para pasar de nivel.
+#Funcion que muestra el avance del puntaje
     def puntaje(self):
         global seg
         global puntaje
@@ -466,7 +469,7 @@ class Pantalla_n1:
             puntaje=puntaje+1
             self.puntuacion.configure(text="Puntaje: "+str(puntaje))
         
-#Se define el movimiento de la figura
+#Se define el movimiento del avatar del jugador
     def mover_cuadrado(self,event):
         x,y=self.canvas.coords(self.cuadradoimg)
         if event.char=="s":
@@ -1322,7 +1325,7 @@ class Pantalla_ganadores:
         self.button_return=Button(self.canvas,text="Regresar",font=("Times New Roman",10),bg="snow",fg="black",command=ventana_principal.correr)
         self.button_return.place(x=255,y=550,width=100,height=30)
 
-        x=quicksort(read())
+        x=quicksort(read()) #Esta variable permite leer el archivo txt y a su vez colocar los puntajes en los labels
 
         #Label primer lugar
         self.primero=Label(self.canvas,text=""+str(x[0]),font=("Times New Roman",12),fg="white",bg="black")
